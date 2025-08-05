@@ -185,15 +185,15 @@ const ProfessionalCourseSection: React.FC = () => {
                     alt={course.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {course.isPublished && (
+                  {/* {course.isPublished && (
                     <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center">
                       <Award className="w-3 h-3 mr-1" />
                       Published
                     </div>
-                  )}
-                  <div className="absolute top-3 right-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
+                  )} */}
+                  <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
                     <PlayCircle className="w-3 h-3 mr-1" />
-                    {course.duration ? `${course.duration} hours` : 'N/A'}
+                    {course.duration ? `${course.duration} min` : 'N/A'}
                   </div>
                 </div>
 
@@ -256,11 +256,10 @@ const ProfessionalCourseSection: React.FC = () => {
                   </div>
 
                   {/* Custom ID */}
-                  <p className="text-xs text-gray-500 mb-4">Course ID: {course.customId}</p>
+                  {/* <p className="text-xs text-gray-500 mb-4">Course ID: {course.customId}</p> */}
 
                   {/* Updated */}
                   <p className="text-xs text-gray-500 mb-4 flex items-center">
-                    <Zap className="w-3 h-3 mr-1" />
                     Updated {new Date(course.updatedAt).toLocaleDateString()}
                   </p>
 

@@ -46,14 +46,10 @@ const MentorAccessSection = () => {
                 />
 
                 {/* Screen content video or image */}
-                <div className="absolute top-[2%] left-[11%] w-[77%] h-[93%] overflow-hidden rounded-[12px] z-20">
-                  <video
-                    src="/demo.mp4"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover rounded-[12px]"
+                <div className="absolute top-[2%] left-[11%] w-[77%] h-[93%] overflow-hidden  z-20">
+                  <img
+                    src="/dashboard.png"
+                    className="w-full h-full object-fill rounded-[8px]"
                   />
                   {/* If using image instead, replace <video> with:
                   <img src="/screen-content.png" alt="Mentor screen" className="w-full h-full object-cover" />
