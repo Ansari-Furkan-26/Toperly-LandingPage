@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Clock, Users, PlayCircle, Award, BookOpen, Zap } from 'lucide-react';
-import CourseDetailModal from './CourseDetailModal';
+import { useNavigate } from 'react-router-dom';
 
 interface Course {
   _id: string;
@@ -23,22 +23,18 @@ interface Course {
   __v: number;
 }
 
-const ProfessionalCourseSection = () => {
+const ProfessionalCourseSection: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const swiperRef = useRef<HTMLDivElement>(null);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const navigate = useNavigate();
 
-const handleEnrollClick = (course: Course) => {
-  setSelectedCourse(course);
-};
-
-const handleCloseModal = () => {
-  setSelectedCourse(null);
-};
+  const handleCourseClick = (courseId: string) => {
+    navigate(`/courses/${courseId}`);
+  };
 
   // Fetch courses from API
   useEffect(() => {
@@ -177,7 +173,11 @@ const handleCloseModal = () => {
             onScroll={updateNavState}
           >
             {courses.map((course) => (
-              <div key={course._id} className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+              <div 
+                key={course._id} 
+                className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
+                onClick={() => handleCourseClick(course._id)}
+              >
                 {/* Image */}
                 <div className="relative">
                   <img
@@ -201,21 +201,20 @@ const handleCloseModal = () => {
                 <div className="p-6">
                   {/* Category & Level */}
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-blue-600 text-sm font-medium ">{course.category}</span>
+                    <span className="text-blue-600 text-sm font-medium">{course.category}</span>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getLevelColor(course.level)}`}>
                       {course.level}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 ">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
                     {course.title}
                   </h3>
                   
-                 <div className="text-gray-600 mb-3 line-clamp-2"
+                  <div className="text-gray-600 mb-3 line-clamp-2"
                     dangerouslySetInnerHTML={{ __html: course.description }}
                   />
-
 
                   {/* Instructor */}
                   <div className="flex items-center mb-3">
@@ -270,13 +269,16 @@ const handleCloseModal = () => {
                     <div className="flex items-center">
                       <span className="text-2xl font-bold text-gray-900">{formatPrice(course.price)}</span>
                     </div>
-                   <button
-  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center"
-  onClick={() => handleEnrollClick(course)}
->
-  Enroll Now
-  <ChevronRight className="w-4 h-4 ml-2" />
-</button>
+                    <button
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCourseClick(course._id);
+                      }}
+                    >
+                      View Details
+                      <ChevronRight className="w-4 h-4 ml-2" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -295,12 +297,6 @@ const handleCloseModal = () => {
           </div>
         </div>
       </div>
-      <CourseDetailModal
-  course={selectedCourse}
-  open={!!selectedCourse}
-  onClose={handleCloseModal}
-  loggedIn={false} // Change this if you have authentication state
-/>
     </section>
   );
 };

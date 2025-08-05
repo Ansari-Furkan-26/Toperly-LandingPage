@@ -11,6 +11,7 @@ import Contact from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CourseDetailModal from "./pages/CourseDetailPage";
+import CourseDetail from "./components/Course/CourseDetail";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +26,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES */}
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />          
-          {/* <Route path="/courses/:id" element={<CourseDetailModal />} /> */}
+          <Route path="/courses/:id" element={<CourseDetail />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/conatct-us" element={<Contact />} />
           
