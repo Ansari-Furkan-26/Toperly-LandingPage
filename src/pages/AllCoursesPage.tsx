@@ -1,5 +1,5 @@
 import React from 'react'
-import AdmissionsSection from "@/components/Home/AdmissionsSection";
+import AdmissionsSection from "@/components/Course/CourseSection";
 
 function AllCourses() {
   return (

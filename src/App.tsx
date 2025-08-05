@@ -10,6 +10,7 @@ import Blog from "./pages/BlogPage";
 import Contact from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import CourseDetailModal from "./pages/CourseDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +24,8 @@ const App = () => (
         <Routes>
           {/* ADD ALL CUSTOM ROUTES */}
           <Route path="/" element={<Home />} />
-          <Route path="/courses" element={<AllCourses />} />
+          <Route path="/courses" element={<AllCourses />} />          
+          {/* <Route path="/courses/:id" element={<CourseDetailModal />} /> */}
           <Route path="/blogs" element={<Blog />} />
           <Route path="/conatct-us" element={<Contact />} />
           

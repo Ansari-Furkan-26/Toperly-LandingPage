@@ -1,131 +1,84 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Clock, Users, PlayCircle, Award, BookOpen, Zap } from 'lucide-react';
+import CourseDetailModal from './CourseDetailModal';
 
 interface Course {
-  id: number;
-  image: string;
+  _id: string;
   title: string;
-  instructor: string;
-  instructorImage: string;
-  rating: number;
-  reviewCount: number;
-  students: number;
-  duration: string;
-  lessons: number;
+  description: string;
+  instructor: { _id: string; name: string } | string;
+  category: string;
   level: 'Beginner' | 'Intermediate' | 'Advanced';
   price: number;
-  originalPrice?: number;
-  category: string;
-  bestseller?: boolean;
-  updated: string;
-  skills: string[];
-  description: string;
+  duration: number;
+  isPublished: boolean;
+  rating: number;
+  totalReviews: number;
+  createdAt: string;
+  updatedAt: string;
+  customId: string;
+  thumbnail: { url?: string };
+  materials: any[];
+  videos: any[];
+  __v: number;
 }
 
-const courses: Course[] = [
-  {
-    id: 1,
-    image: 'https://toperly.com/wp-content/uploads/2025/07/Python_thumbnail-480x360.png',
-    title: 'Complete Python Bootcamp: Go from Zero to Hero in Python 3',
-    instructor: 'Dr. Sarah Johnson',
-    instructorImage: 'https://via.placeholder.com/40x40.png?text=SJ',
-    rating: 4.8,
-    reviewCount: 15423,
-    students: 89234,
-    duration: '22 hours',
-    lessons: 155,
-    level: 'Beginner',
-    price: 49.99,
-    originalPrice: 199.99,
-    category: 'Programming',
-    bestseller: true,
-    updated: 'Updated December 2024',
-    skills: ['Python', 'Data Structures', 'OOP', 'Web Development'],
-    description: 'Learn Python like a Professional! Start from the basics and go all the way to creating your own applications and games!'
-  },
-  {
-    id: 2,
-    image: 'https://toperly.com/wp-content/uploads/2025/07/Machine_learning_thumbnail-480x360.webp',
-    title: 'Machine Learning A-Z: Hands-On Python & R in Data Science',
-    instructor: 'Prof. Michael Chen',
-    instructorImage: 'https://via.placeholder.com/40x40.png?text=MC',
-    rating: 4.9,
-    reviewCount: 28917,
-    students: 156789,
-    duration: '44 hours',
-    lessons: 320,
-    level: 'Intermediate',
-    price: 79.99,
-    originalPrice: 299.99,
-    category: 'Data Science',
-    bestseller: true,
-    updated: 'Updated January 2025',
-    skills: ['Machine Learning', 'Python', 'R', 'Data Analysis'],
-    description: 'Learn to create Machine Learning Algorithms in Python and R from two Data Science experts. Code templates included.'
-  },
-  {
-    id: 3,
-    image: 'https://toperly.com/wp-content/uploads/2025/07/Political_thumbnail-480x360.png',
-    title: 'AI in Political Marketing: Campaign Strategy & Analytics',
-    instructor: 'Emma Rodriguez',
-    instructorImage: 'https://via.placeholder.com/40x40.png?text=ER',
-    rating: 4.7,
-    reviewCount: 5234,
-    students: 23456,
-    duration: '18 hours',
-    lessons: 89,
-    level: 'Advanced',
-    price: 59.99,
-    originalPrice: 179.99,
-    category: 'Marketing',
-    updated: 'Updated November 2024',
-    skills: ['AI Marketing', 'Campaign Analytics', 'Data Visualization', 'Strategy'],
-    description: 'Master AI-driven political marketing strategies and learn to analyze campaign data for maximum impact.'
-  },
-  {
-    id: 4,
-    image: 'https://toperly.com/wp-content/uploads/2025/07/Cloud_computing_thumbnail-480x360.png',
-    title: 'AWS Certified Solutions Architect - Complete Training',
-    instructor: 'David Kim',
-    instructorImage: 'https://via.placeholder.com/40x40.png?text=DK',
-    rating: 4.8,
-    reviewCount: 12089,
-    students: 67890,
-    duration: '35 hours',
-    lessons: 198,
-    level: 'Intermediate',
-    price: 69.99,
-    originalPrice: 249.99,
-    category: 'Cloud Computing',
-    updated: 'Updated December 2024',
-    skills: ['AWS', 'Cloud Architecture', 'DevOps', 'Security'],
-    description: 'Pass the AWS Solutions Architect Associate exam and become a certified cloud professional.'
-  },
-  {
-    id: 5,
-    image: 'https://toperly.com/wp-content/uploads/2025/07/Fashion_thumbnail-copy-480x360.png',
-    title: 'AI in Fashion: Design, Retail & Trend Prediction',
-    instructor: 'Isabella Martinez',
-    instructorImage: 'https://via.placeholder.com/40x40.png?text=IM',
-    rating: 4.6,
-    reviewCount: 3421,
-    students: 15678,
-    duration: '26 hours',
-    lessons: 142,
-    level: 'Beginner',
-    price: 54.99,
-    originalPrice: 164.99,
-    category: 'Fashion Tech',
-    updated: 'Updated October 2024',
-    skills: ['AI Design', 'Trend Analysis', 'Retail Tech', 'Fashion Analytics'],
-    description: 'Discover how AI is revolutionizing fashion design, retail operations, and trend forecasting.'
-  },
-];
-
 const ProfessionalCourseSection = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
-  const swiperRef = useRef<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const swiperRef = useRef<HTMLDivElement>(null);
+  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+
+const handleEnrollClick = (course: Course) => {
+  setSelectedCourse(course);
+};
+
+const handleCloseModal = () => {
+  setSelectedCourse(null);
+};
+
+  // Fetch courses from API
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/courses/all-course');
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
+        const result = await response.json();
+        // Map API data to match Course interface
+        const mappedCourses = result.data.map((course: any) => ({
+          _id: course._id,
+          title: course.title,
+          description: course.description,
+          instructor: course.instructor || 'Unknown Instructor',
+          category: course.category,
+          level: course.level as 'Beginner' | 'Intermediate' | 'Advanced',
+          price: course.price,
+          duration: course.duration,
+          isPublished: course.isPublished,
+          rating: course.rating,
+          totalReviews: course.totalReviews || 0,
+          createdAt: course.createdAt,
+          updatedAt: course.updatedAt,
+          customId: course.customId || 'N/A',
+          thumbnail: course.thumbnail || { url: 'https://via.placeholder.com/480x360.png?text=Course' },
+          materials: course.materials || [],
+          videos: course.videos || [],
+          __v: course.__v
+        }));
+        setCourses(mappedCourses);
+        setLoading(false);
+      } catch (err: any) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
 
   const slidePrev = () => {
     if (swiperRef.current) {
@@ -161,6 +114,14 @@ const ProfessionalCourseSection = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  if (loading) {
+    return <div className="text-center py-16">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-16 text-red-600">Error: {error}</div>;
+  }
 
   return (
     <section className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
@@ -216,23 +177,23 @@ const ProfessionalCourseSection = () => {
             onScroll={updateNavState}
           >
             {courses.map((course) => (
-              <div key={course.id} className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
+              <div key={course._id} className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group">
                 {/* Image */}
                 <div className="relative">
                   <img
-                    src={course.image}
+                    src={course.thumbnail.url || 'https://via.placeholder.com/480x360.png?text=Course'}
                     alt={course.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {course.bestseller && (
+                  {course.isPublished && (
                     <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center">
                       <Award className="w-3 h-3 mr-1" />
-                      Bestseller
+                      Published
                     </div>
                   )}
                   <div className="absolute top-3 right-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
                     <PlayCircle className="w-3 h-3 mr-1" />
-                    {course.duration}
+                    {course.duration ? `${course.duration} hours` : 'N/A'}
                   </div>
                 </div>
 
@@ -240,85 +201,82 @@ const ProfessionalCourseSection = () => {
                 <div className="p-6">
                   {/* Category & Level */}
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-blue-600 text-sm font-medium">{course.category}</span>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getLevelColor(course.level)}`}>
+                    <span className="text-blue-600 text-sm font-medium ">{course.category}</span>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getLevelColor(course.level)}`}>
                       {course.level}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 ">
                     {course.title}
                   </h3>
+                  
+                 <div className="text-gray-600 mb-3 line-clamp-2"
+                    dangerouslySetInnerHTML={{ __html: course.description }}
+                  />
+
 
                   {/* Instructor */}
                   <div className="flex items-center mb-3">
                     <img
-                      src={course.instructorImage}
-                      alt={course.instructor}
+                      src={'https://i.pinimg.com/736x/98/a6/aa/98a6aadc34b3519d5c4e0a6150f0701f.jpg'}
+                      alt={typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
                       className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200"
                     />
-                    <span className="text-sm text-gray-600">{course.instructor}</span>
+                    <span className="text-sm text-gray-600">
+                      {typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
+                    </span>
                   </div>
 
                   {/* Rating */}
                   <div className="flex items-center mb-3">
                     <div className="flex items-center mr-2">
-                      <span className="text-sm font-bold text-gray-900 mr-1">{course.rating}</span>
+                      <span className="text-sm font-bold text-gray-900 mr-1">{course.rating || 'N/A'}</span>
                       <div className="flex">
                         {[...Array(5)].map((_, i) => (
                           <Star 
                             key={i} 
-                            className={`w-4 h-4 ${i < Math.floor(course.rating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                            className={`w-4 h-4 ${i < Math.floor(course.rating || 0) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
                           />
                         ))}
                       </div>
                     </div>
-                    <span className="text-sm text-gray-500">({course.reviewCount.toLocaleString()})</span>
+                    <span className="text-sm text-gray-500">({course.totalReviews.toLocaleString()})</span>
                   </div>
 
                   {/* Stats */}
                   <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
                     <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" />
-                      {course.students.toLocaleString()} students
+                      <Users className="w-4 h-4 mr-1" /> 99+ students
                     </div>
                     <div className="flex items-center">
                       <BookOpen className="w-4 h-4 mr-1" />
-                      {course.lessons} lessons
+                      {course.videos.length} lessons
                     </div>
                   </div>
 
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-1 mb-4">
-                    {course.skills.slice(0, 2).map((skill, index) => (
-                      <span key={index} className="bg-blue-50 text-blue-700 px-2 py-1 rounded text-xs font-medium">
-                        {skill}
-                      </span>
-                    ))}
-                    {course.skills.length > 3 && (
-                      <span className="text-blue-600 text-xs font-medium">+{course.skills.length - 3} more</span>
-                    )}
-                  </div>
+                  {/* Custom ID */}
+                  <p className="text-xs text-gray-500 mb-4">Course ID: {course.customId}</p>
 
                   {/* Updated */}
                   <p className="text-xs text-gray-500 mb-4 flex items-center">
                     <Zap className="w-3 h-3 mr-1" />
-                    {course.updated}
+                    Updated {new Date(course.updatedAt).toLocaleDateString()}
                   </p>
 
                   {/* Price & CTA */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <span className="text-2xl font-bold text-gray-900">{formatPrice(course.price)}</span>
-                      {course.originalPrice && (
-                        <span className="text-sm text-gray-500 line-through ml-2">{formatPrice(course.originalPrice)}</span>
-                      )}
                     </div>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center">
-                      Enroll Now
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </button> 
+                   <button
+  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center"
+  onClick={() => handleEnrollClick(course)}
+>
+  Enroll Now
+  <ChevronRight className="w-4 h-4 ml-2" />
+</button>
                   </div>
                 </div>
               </div>
@@ -337,6 +295,12 @@ const ProfessionalCourseSection = () => {
           </div>
         </div>
       </div>
+      <CourseDetailModal
+  course={selectedCourse}
+  open={!!selectedCourse}
+  onClose={handleCloseModal}
+  loggedIn={false} // Change this if you have authentication state
+/>
     </section>
   );
 };

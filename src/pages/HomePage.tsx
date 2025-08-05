@@ -4,7 +4,7 @@ import CoursesSection from "@/components/Home/CoursesSection";
 import TestimonialsSection from "@/components/Home/TestimonialsSection";
 import MentorAccessSection from "@/components/Home/MentorAccessSection";
 import TrustedCoursesBrand from "@/components/Home/TrustedCoursesBrand";
-import AdmissionsSection from "@/components/Home/AdmissionsSection";
+import AdmissionsSection from "@/components/Course/CourseSection";
 import VideoPitchSection from "@/components/Home/VideoPitchSection";
 import React from "react";
 import LanguagesCarouselSection from "@/components/Home/LanguagesCarouselSection";

@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, ShoppingCart, User } from 'lucide-react';
+import axios from 'axios'; 
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [query, setQuery] = useState('');
+  const [filtered, setFiltered] = useState([]);
+
+// Fetch all courses when Navbar mounts
+useEffect(() => {
+  axios.get('http://localhost:5000/api/courses/')
+    .then((res) => {
+      if (res.data.success) {
+        setCourses(res.data.data);
+      }
+    })
+    .catch((err) => console.error('Failed to fetch courses:', err));
+}, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,12 +38,28 @@ const Navbar = () => {
     setIsUserMenuOpen(false);
   };
 
+  const handleSearch = (e) => {
+  const q = e.target.value.toLowerCase();
+  setQuery(q);
+  if (q.length < 2) {
+    setFiltered([]);
+    return;
+  }
+
+  const results = courses.filter(course =>
+    course.title.toLowerCase().includes(q) ||
+    course.description.toLowerCase().includes(q) ||
+    course.price.toString().includes(q)
+  );
+
+  setFiltered(results);
+};
+
+
   const topNavItems = [
     { label: 'Welcome to Toperly', href: '#' },
-    // { label: 'Jobs', href: '#' },
-    // { label: 'Events', href: '#' },
-    // { label: 'Become a Master', href: '#' },
-    // { label: 'Blog', href: '#' }
+    { label: 'Become an Instructor', href: '#' },
+    { label: 'My learning', href: '#' }
   ];
 
   const mainNavItems = [
@@ -118,28 +149,46 @@ const Navbar = () => {
           {/* Right side items */}
           <div className="flex items-center space-x-4">
             {/* Search bar - hidden on mobile */}
-            <div className="hidden md:flex items-center">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search for anything"
-                  className="w-64 px-4 py-2 bg-gray-100 text-gray-900 placeholder-gray-500 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
-                />
-                <button className="absolute right-3 top-2.5">
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+          <div className="hidden md:flex items-center relative">
+              <input
+                type="text"
+                placeholder="Search for anything"
+                value={query}
+                onChange={handleSearch}
+                className="w-64 px-4 py-2 bg-gray-100 text-gray-900 placeholder-gray-500 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+              />
+              <button className="absolute right-3 top-2.5">
+                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
 
-           
+              {/* 🔽 Dropdown with filtered results */}
+              {filtered.length > 0 && (
+                <ul className="absolute top-full left-0 mt-1 w-[300px] bg-white border rounded shadow z-50 max-h-60 overflow-y-auto">
+                  {filtered.map(course => (
+                    <li
+                      key={course._id}
+                      className="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+                      onClick={() => {
+                        window.location.href = `/courses/${course._id}`;
+                        setQuery('');
+                        setFiltered([]);
+                      }}
+                    >
+                      <div className="font-medium">{course.title}</div>
+                      <div className="text-gray-500 text-xs line-clamp-1" dangerouslySetInnerHTML={{ __html: course.description }} />
+                      <div className="text-green-600 font-semibold text-sm">₹{course.price}</div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>           
 
             {/* Mobile menu button */}
             <button
               className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
               ) : (
