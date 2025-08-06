@@ -40,13 +40,14 @@ const ProfessionalCourseSection: React.FC = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/courses/all-course');
+        const response = await fetch('http://localhost:5000/api/courses/');
         if (!response.ok) {
           throw new Error('Failed to fetch courses');
         }
         const result = await response.json();
         // Map API data to match Course interface
-        const mappedCourses = result.data.map((course: any) => ({
+        
+        const mappedCourses = result?.map((course: any) => ({
           _id: course._id,
           title: course.title,
           description: course.description,
@@ -172,7 +173,7 @@ const ProfessionalCourseSection: React.FC = () => {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             onScroll={updateNavState}
           >
-            {courses.map((course) => (
+            {courses?.map((course) => (
               <div 
                 key={course._id} 
                 className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
@@ -181,7 +182,7 @@ const ProfessionalCourseSection: React.FC = () => {
                 {/* Image */}
                 <div className="relative">
                   <img
-                    src={course.thumbnail.url || 'https://via.placeholder.com/480x360.png?text=Course'}
+                    src={course.thumbnail.url}
                     alt={course.title}
                     className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -233,7 +234,7 @@ const ProfessionalCourseSection: React.FC = () => {
                     <div className="flex items-center mr-2">
                       <span className="text-sm font-bold text-gray-900 mr-1">{course.rating || 'N/A'}</span>
                       <div className="flex">
-                        {[...Array(5)].map((_, i) => (
+                        {[...Array(5)]?.map((_, i) => (
                           <Star 
                             key={i} 
                             className={`w-4 h-4 ${i < Math.floor(course.rating || 0) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
