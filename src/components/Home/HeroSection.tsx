@@ -4,7 +4,7 @@ import heroImage from "@/assets/ai-hero-premium.jpg";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-screen mt-4 md:mt-10 flex items-center justify-center bg-gradient-secondary relative overflow-hidden pt-20">
+    <section className="min-h-screen mt-10 flex items-center justify-center bg-gradient-secondary relative overflow-hidden pt-20">
       {/* Advanced Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating Neural Nodes */}
@@ -26,10 +26,10 @@ const HeroSection = () => {
         </svg>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Enhanced Hero Content */}
-          <div className="text-center lg:text-left animate-slide-up">
+          <div className="text-left animate-slide-up">
             {/* Premium Badge */}
             <div className="inline-flex items-center px-6 py-3 bg-gradient-accent/60 backdrop-blur-sm rounded-full text-sm font-semibold text-accent-foreground mb-8 border border-primary/20 animate-fade-in shadow-glow-secondary">
               <Sparkles className="w-4 h-4 mr-2 text-primary animate-bounce-subtle" />
@@ -47,15 +47,15 @@ const HeroSection = () => {
               </span>
               <br />
               <span className="text-4xl sm:text-5xl lg:text-6xl text-muted-foreground font-light">
-                Ready for the Future with
+                Ready for the Future with {""}
               </span>
-              <br />
+              {/* <br /> */}
               <span className="bg-gradient-primary bg-clip-text text-transparent">
-                AI
+                 AI
               </span>
             </h1>
             
-            <p className="text-xl sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            <p className=" sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
               Join <span className="font-semibold text-primary">50,000+</span> professionals mastering 
               cutting-edge AI skills through our immersive, hands-on learning platform.
             </p>
@@ -70,18 +70,18 @@ const HeroSection = () => {
                 Start Your AI Journey
                 <ArrowRight className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <Button 
+              {/* <Button 
                 variant="outline" 
                 size="lg"
                 className="border-2 border-primary/30 text-primary hover:bg-primary/5 hover:border-primary/60 hover:shadow-glow-secondary text-lg px-8 py-4 h-auto group backdrop-blur-sm"
               >
                 <Play className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
                 Watch Demo
-              </Button>
+              </Button> */}
             </div>
 
             {/* Premium Stats with AI Indicators */}
-            <div className="grid grid-cols-3 gap-8 text-center lg:text-left">
+            <div className="grid grid-cols-3 gap-8 text-left">
               <div className="group animate-scale-in" style={{ animationDelay: '0.2s' }}>
                 <div className="flex items-center justify-center lg:justify-start mb-2">
                   <div className="text-3xl sm:text-4xl font-black text-primary mr-2">50K+</div>

@@ -124,7 +124,7 @@ const CourseDetail: React.FC = () => {
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen mt-28 bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -314,7 +314,7 @@ const CourseDetail: React.FC = () => {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-8 space-y-6">
+            <div className="sticky top-10 space-y-6">
               {/* Enrollment Card */}
               <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
                 <div className="text-center mb-6">

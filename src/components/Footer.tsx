@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { Brain, Mail, Phone, MapPin, Github, Twitter, Linkedin, Youtube } from "lucide-react";
+import {
+  Brain, Mail, Phone, MapPin, Github, Twitter, Linkedin, Youtube
+} from "lucide-react";
 
 const Footer = () => {
   const footerLinks = {
@@ -7,7 +9,7 @@ const Footer = () => {
       { name: "Machine Learning", href: "#" },
       { name: "Deep Learning", href: "#" },
       { name: "Computer Vision", href: "#" },
-      { name: "Natural Language Processing", href: "#" },
+      { name: "Python Fundamental", href: "#" },
       { name: "AI for Business", href: "#" }
     ],
     company: [
@@ -21,7 +23,6 @@ const Footer = () => {
       { name: "Blog", href: "#" },
       { name: "Community", href: "#" },
       { name: "Help Center", href: "#" },
-      { name: "Student Stories", href: "#" },
       { name: "Certificates", href: "#" }
     ],
     legal: [
@@ -67,112 +68,116 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Main Footer Content */}
-        <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Brain className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                Toperly
-              </span>
+        {/* Responsive grid/footer main */}
+        <div
+          className="
+            py-12
+            grid
+            gap-8
+            md:grid-cols-2
+            lg:grid-cols-6
+            grid-cols-1
+          "
+        >
+          {/* Brand & contact: mobile - flex row; md+ - block */}
+          <div className="lg:col-span-2 flex flex-col md:flex-row md:space-x-6 lg:flex-col lg:space-x-0">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center mb-4 md:mb-0">
+              <img src="/logo.png" alt="" className="w-40" />
             </div>
-            <p className="text-muted-foreground mb-6 max-w-sm">
-              Empowering the next generation of AI professionals with cutting-edge courses 
-              and hands-on experience.
-            </p>
-            
             {/* Contact Info */}
-            <div className="space-y-2 text-sm text-muted-foreground">
+            <div className="space-y-2 text-sm text-muted-foreground mb-6 max-w-sm">
+              <p className="mb-4">
+                Empowering the next generation of AI professionals with cutting-edge courses
+                and hands-on experience.
+              </p>
               <div className="flex items-center space-x-2">
                 <Mail className="w-4 h-4" />
-                <span>hello@toperly.ai</span>
+                <span>toperly.ai@gmail.com</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Phone className="w-4 h-4" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 8178946715</span>
               </div>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-4 h-4" />
-                <span>San Francisco, CA</span>
+                <span>Sector 42, Gurugram, HR</span>
               </div>
             </div>
           </div>
 
-          {/* Links Sections */}
-          <div>
-            <h4 className="font-semibold mb-4">Courses</h4>
-            <ul className="space-y-2">
-              {footerLinks.courses.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2">
-              {footerLinks.resources.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          {/* Links: grid-cols-2 on mobile/tablet, original on desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 col-span-2 lg:col-span-4">
+            {/* First row: Courses & Company */}
+            <div>
+              <h4 className="font-semibold mb-4">Courses</h4>
+              <ul className="space-y-2">
+                {footerLinks.courses.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2">
+                {footerLinks.company.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Second row: Resources & Legal */}
+            <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <ul className="space-y-2">
+                {footerLinks.resources.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
         {/* Bottom Section */}
         <div className="py-6 border-t border-border flex flex-col md:flex-row items-center justify-between">
           <div className="text-sm text-muted-foreground mb-4 md:mb-0">
-            © 2025 Unsquare Labs All rights reserved.
+            ©2025 Unsquare Labs. All rights reserved.
           </div>
-          
           {/* Social Links */}
           <div className="flex items-center space-x-4">
             {socialLinks.map((social) => (
