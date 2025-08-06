@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, Clock, Users, PlayCircle, Award, BookOpen, Zap } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Clock, Users, PlayCircle, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface Course {
@@ -23,7 +23,7 @@ interface Course {
   __v: number;
 }
 
-// 1. Skeleton Card Component
+// Skeleton Card Component
 function CourseCardSkeleton() {
   return (
     <div className="flex-none w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
@@ -60,14 +60,15 @@ const ProfessionalCourseSection: React.FC = () => {
   const [atEnd, setAtEnd] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const swiperRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const navigate = useNavigate();
 
-  // ...handles (slidePrev/slideNext/etc) and formatters are unchanged...
-   const handleCourseClick = (courseId: string) => {
+  const handleCourseClick = (courseId: string) => {
     navigate(`/courses/${courseId}`);
   };
-  
+
   const slidePrev = () => {
     if (swiperRef.current) {
       const container = swiperRef.current;
@@ -129,7 +130,27 @@ const ProfessionalCourseSection: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-    // Helper functions
+  // Intersection Observer to trigger animation when section enters viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 } // Trigger when 20% of the section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
+  // Helper functions
   const formatPrice = (price: number) => `₹${price.toFixed(2)}`;
 
   const getLevelColor = (level: string) => {
@@ -140,11 +161,11 @@ const ProfessionalCourseSection: React.FC = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-  
+
   return (
-    <section className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header (unchanged) */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center mb-2">
@@ -158,7 +179,6 @@ const ProfessionalCourseSection: React.FC = () => {
               Master cutting-edge technologies with expert-led courses trusted by professionals worldwide
             </p>
           </div>
-          {/* Navigation (unchanged) */}
           <div className="flex items-center space-x-3">
             <button
               onClick={slidePrev}
@@ -187,6 +207,30 @@ const ProfessionalCourseSection: React.FC = () => {
 
         {/* Course Cards OR Skeleton */}
         <div className="relative">
+          <style>
+            {`
+              @keyframes fadeUp {
+                from {
+                  opacity: 0;
+                  transform: translateY(20px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+
+              .animate-fade-up {
+                animation: fadeUp 0.6s ease-out forwards;
+                animation-delay: calc(var(--index) * 0.1s);
+              }
+
+              .hidden-animation {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+            `}
+          </style>
           <div 
             ref={swiperRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide pb-6"
@@ -203,115 +247,109 @@ const ProfessionalCourseSection: React.FC = () => {
               null
             ) : (
               // Real course cards
-              courses.map((course) => (
+              courses.map((course, idx) => (
                 <div 
-                key={course._id} 
-                className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
-                onClick={() => handleCourseClick(course._id)}
-              >
-                {/* Image */}
-                <div className="relative">
-                  <img
-                    src={course.thumbnail.url}
-                    alt={course.title}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {/* {course.isPublished && (
-                    <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center">
-                      <Award className="w-3 h-3 mr-1" />
-                      Published
-                    </div>
-                  )} */}
-                  <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
-                    <PlayCircle className="w-3 h-3 mr-1" />
-                    {course.duration ? `${course.duration} min` : 'N/A'}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  {/* Category & Level */}
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-blue-600 text-sm font-medium">{course.category}</span>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getLevelColor(course.level)}`}>
-                      {course.level}
-                    </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
-                    {course.title}
-                  </h3>
-                  
-                  <div className="text-gray-600 mb-3 line-clamp-2"
-                    dangerouslySetInnerHTML={{ __html: course.description }}
-                  />
-
-                  {/* Instructor */}
-                  <div className="flex items-center mb-3">
+                  key={course._id} 
+                  className={`flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer ${
+                    isVisible ? 'animate-fade-up' : 'hidden-animation'
+                  }`}
+                  style={{ '--index': idx } as React.CSSProperties}
+                  onClick={() => handleCourseClick(course._id)}
+                >
+                  {/* Image */}
+                  <div className="relative">
                     <img
-                      src={'https://i.pinimg.com/736x/98/a6/aa/98a6aadc34b3519d5c4e0a6150f0701f.jpg'}
-                      alt={typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
-                      className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200"
+                      src={course.thumbnail.url}
+                      alt={course.title}
+                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <span className="text-sm text-gray-600">
-                      {typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
-                    </span>
+                    <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
+                      <PlayCircle className="w-3 h-3 mr-1" />
+                      {course.duration ? `${course.duration} min` : 'N/A'}
+                    </div>
                   </div>
 
-                  {/* Rating */}
-                  <div className="flex items-center mb-3">
-                    <div className="flex items-center mr-2">
-                      <span className="text-sm font-bold text-gray-900 mr-1">{course.rating || 'N/A'}</span>
-                      <div className="flex">
-                        {[...Array(5)]?.map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className={`w-4 h-4 ${i < Math.floor(course.rating || 0) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
-                          />
-                        ))}
+                  {/* Content */}
+                  <div className="p-6">
+                    {/* Category & Level */}
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-blue-600 text-sm font-medium">{course.category}</span>
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getLevelColor(course.level)}`}>
+                        {course.level}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2">
+                      {course.title}
+                    </h3>
+                    
+                    <div className="text-gray-600 mb-3 line-clamp-2"
+                      dangerouslySetInnerHTML={{ __html: course.description }}
+                    />
+
+                    {/* Instructor */}
+                    <div className="flex items-center mb-3">
+                      <img
+                        src={'https://i.pinimg.com/736x/98/a6/aa/98a6aadc34b3519d5c4e0a6150f0701f.jpg'}
+                        alt={typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
+                        className="w-8 h-8 rounded-full mr-2 border-2 border-gray-200"
+                      />
+                      <span className="text-sm text-gray-600">
+                        {typeof course.instructor === 'string' ? course.instructor : course.instructor.name}
+                      </span>
+                    </div>
+
+                    {/* Rating */}
+                    <div className="flex items-center mb-3">
+                      <div className="flex items-center mr-2">
+                        <span className="text-sm font-bold text-gray-900 mr-1">{course.rating || 'N/A'}</span>
+                        <div className="flex">
+                          {[...Array(5)]?.map((_, i) => (
+                            <Star 
+                              key={i} 
+                              className={`w-4 h-4 ${i < Math.floor(course.rating || 0) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`} 
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <span className="text-sm text-gray-500">({course.totalReviews.toLocaleString()})</span>
+                    </div>
+
+                    {/* Stats */}
+                    <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
+                      <div className="flex items-center">
+                        <Users className="w-4 h-4 mr-1" /> 99+ students
+                      </div>
+                      <div className="flex items-center">
+                        <BookOpen className="w-4 h-4 mr-1" />
+                        {course.videos.length} lessons
                       </div>
                     </div>
-                    <span className="text-sm text-gray-500">({course.totalReviews.toLocaleString()})</span>
-                  </div>
 
-                  {/* Stats */}
-                  <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
-                    <div className="flex items-center">
-                      <Users className="w-4 h-4 mr-1" /> 99+ students
+                    {/* Updated */}
+                    <p className="text-xs text-gray-500 mb-4 flex items-center">
+                      Updated {new Date(course.updatedAt).toLocaleDateString()}
+                    </p>
+
+                    {/* Price & CTA */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <span className="text-2xl font-bold text-gray-900">{formatPrice(course.price)}</span>
+                      </div>
+                      <button
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCourseClick(course._id);
+                        }}
+                      >
+                        View Details
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </button>
                     </div>
-                    <div className="flex items-center">
-                      <BookOpen className="w-4 h-4 mr-1" />
-                      {course.videos.length} lessons
-                    </div>
-                  </div>
-
-                  {/* Custom ID */}
-                  {/* <p className="text-xs text-gray-500 mb-4">Course ID: {course.customId}</p> */}
-
-                  {/* Updated */}
-                  <p className="text-xs text-gray-500 mb-4 flex items-center">
-                    Updated {new Date(course.updatedAt).toLocaleDateString()}
-                  </p>
-
-                  {/* Price & CTA */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <span className="text-2xl font-bold text-gray-900">{formatPrice(course.price)}</span>
-                    </div>
-                    <button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleCourseClick(course._id);
-                      }}
-                    >
-                      View Details
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </button>
                   </div>
                 </div>
-              </div>
               ))
             )}
           </div>
