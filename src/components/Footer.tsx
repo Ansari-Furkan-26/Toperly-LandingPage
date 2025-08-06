@@ -41,37 +41,44 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gradient-secondary border-t border-border">
+    <footer className="bg-black border-t border-gray-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Centered Logo Section */}
+        <div className="py-12 ">
+          <div className="text-center">
+            <div className="flex justify-center ">
+              <img src="/ai.png" alt="Company Logo" className="w-[40rem] -ml-10 h-auto" />
+            </div>
+          </div>
+        </div>
          
         {/* Newsletter Section */}
-        <div className="py-12 border-b border-border">
+        <div className="py-12 border-b border-gray-800">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4">
+            <h3 className="text-5xl mx-40 font-bold mb-4 text-white">
               Stay Updated with{" "}
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 AI Trends
               </span>
             </h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-2xl mx-10 text-gray-400 mb-6">
               Get the latest insights, course updates, and industry trends delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-1 px-4 py-2 rounded-lg border border-gray-700 bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
-              <Button className="bg-gradient-primary hover:shadow-glow-primary">
+              <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25">
                 Subscribe
               </Button>
             </div>
           </div>
         </div>
 
-
         {/* Responsive grid/footer main */}
-        
         <div
           className="
             py-12
@@ -89,8 +96,8 @@ const Footer = () => {
               <img src="/logo.png" alt="" className="w-40" />
             </div>
             {/* Contact Info */}
-            <div className="space-y-2 text-sm text-muted-foreground mb-6 max-w-sm">
-              <p className="mb-4">
+            <div className="space-y-2 text-sm text-gray-400 mb-6 max-w-sm">
+              <p className="mb-4 text-gray-300">
                 Empowering the next generation of AI professionals with cutting-edge courses
                 and hands-on experience.
               </p>
@@ -113,13 +120,13 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 col-span-2 lg:col-span-4">
             {/* First row: Courses & Company */}
             <div>
-              <h4 className="font-semibold mb-4">Courses</h4>
+              <h4 className="font-semibold mb-4 text-white">Courses</h4>
               <ul className="space-y-2">
                 {footerLinks.courses.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-gray-400 hover:text-blue-400 transition-colors"
                     >
                       {link.name}
                     </a>
@@ -128,13 +135,13 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
+              <h4 className="font-semibold mb-4 text-white">Company</h4>
               <ul className="space-y-2">
                 {footerLinks.company.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-gray-400 hover:text-blue-400 transition-colors"
                     >
                       {link.name}
                     </a>
@@ -144,13 +151,13 @@ const Footer = () => {
             </div>
             {/* Second row: Resources & Legal */}
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="font-semibold mb-4 text-white">Resources</h4>
               <ul className="space-y-2">
                 {footerLinks.resources.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-gray-400 hover:text-blue-400 transition-colors"
                     >
                       {link.name}
                     </a>
@@ -159,13 +166,13 @@ const Footer = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
+              <h4 className="font-semibold mb-4 text-white">Legal</h4>
               <ul className="space-y-2">
                 {footerLinks.legal.map((link) => (
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-gray-400 hover:text-blue-400 transition-colors"
                     >
                       {link.name}
                     </a>
@@ -177,8 +184,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="py-6 border-t border-border flex flex-col md:flex-row items-center justify-between">
-          <div className="text-sm text-muted-foreground mb-4 md:mb-0">
+        <div className="py-6 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between">
+          <div className="text-sm text-gray-400 mb-4 md:mb-0">
             ©2025 Unsquare Labs. All rights reserved.
           </div>
           {/* Social Links */}
@@ -187,7 +194,7 @@ const Footer = () => {
               <a
                 key={social.label}
                 href={social.href}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-blue-500 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110"
                 aria-label={social.label}
               >
                 <social.icon className="w-4 h-4" />

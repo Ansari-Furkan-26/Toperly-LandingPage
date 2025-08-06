@@ -87,8 +87,8 @@ const DarkAIHero = () => {
                 showTitle ? 'animate-badge-slide' : 'opacity-0 transform translate-x-[-100px]'
               } bg-blue-500/20 text-blue-400 border-blue-500/30`}
             >
-              <Shield className="w-4 h-4 mr-2 animate-spin-slow text-blue-400" />
-              Verify to Trust AI Platform
+              <Shield className="w-4 h-4 mr-2 text-blue-400" />
+              Secure Your Spot in the AI Academy
               <div className="w-2 h-2 rounded-full ml-2 animate-pulse-infinite bg-blue-400"></div>
             </div>
             

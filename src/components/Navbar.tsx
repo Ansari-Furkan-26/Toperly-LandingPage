@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Menu, X, ShoppingCart, User, Search, Sparkles, Home, BookOpen, PenTool, Mail, Folder } from 'lucide-react';
 import axios from 'axios';
@@ -158,19 +159,19 @@ const Navbar = () => {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
       isScrolled 
-        ? 'bg-white text-gray-900 shadow-md' 
-        : ' text-white'
+        ? 'text-gray-100 shadow-md backdrop-blur-xl bg-gray-900/50' 
+        : 'text-white bg-transparent'
     } ${isScrolled ? 'h-16' : 'h-16 sm:h-24'}`}>
       
       {/* Top row - hidden when scrolled */}
       <div className={`${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'sm:h-12 opacity-100'} transition-all duration-300 ${
         isScrolled ? 'bg-gray-50' : 'bg-gray-900'
-      }  ${isScrolled ? 'border-gray-200' : 'border-gray-700'}`}>
+      } ${isScrolled ? 'border-gray-200' : 'border-gray-700'}`}>
         <div className="max-w-7xl mx-auto pt-2 px-4 h-full flex items-center justify-end">
           <div className="hidden md:flex items-center space-x-6 text-sm">
             {topNavItems.map((item, index) => (
               <a key={index} href={item.href} className={`cursor-default transition-colors duration-200 ${
-                isScrolled ? 'text-gray-600 hover:text-gray-800' : 'text-gray-300 hover:text-white'
+                isScrolled ? 'text-gray-100 hover:text-gray-800' : 'text-gray-300 hover:text-white'
               }`}>
                 {item.label}
               </a>
@@ -180,9 +181,7 @@ const Navbar = () => {
       </div>
 
       {/* Main navbar */}
-      <div className={`${isScrolled ? 'h-16' : 'h-14 sm:h-16'} transition-all  duration-300 ${
-       isScrolled ? 'bg-backdrop-blur-xl bg-gray-50/10' : ' '
-      }`}>
+      <div className={`${isScrolled ? 'h-16' : 'h-14 sm:h-16'} transition-all duration-300`}>
         <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
           {/* Logo & Categories */}
           <div className="flex items-center">
@@ -198,17 +197,18 @@ const Navbar = () => {
               <div className="relative group hidden lg:flex">
                 <button className={`font-medium focus:outline-none flex items-center transition-colors duration-300 ${
                   isScrolled 
-                    ? 'text-gray-900 hover:text-orange-500' 
-                    : 'text-white hover:text-orange-400'
+                    ? 'text-gray-300 hover:text-gray-500' 
+                    : 'text-white hover:text-gray-400'
                 }`}>
                   Categories
-                  <ChevronDown className="h-4 w-4 ml-1" />
+                  <ChevronDown className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:rotate-180" />
                 </button>
-                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out transform group-hover:scale-100 scale-95 z-50">
                   {categories.map((cat) => (
                     <div
                       key={cat}
-                      className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-orange-500 cursor-pointer"
+                      className="px-4 py-2 text-sm text-gray-700  hover:text-gray-900 cursor-pointer transition-colors duration-200 animate-fadeUp"
+                      style={{ animationDelay: `${categories.indexOf(cat) * 50}ms` }}
                     >
                       {cat}
                     </div>
@@ -226,8 +226,8 @@ const Navbar = () => {
                 href={item.href}
                 className={`text-sm font-medium transition-colors duration-300 ${
                   isScrolled
-                    ? 'text-gray-700 hover:text-orange-500'
-                    : 'text-gray-300 hover:text-orange-400'
+                    ? 'text-gray-300 hover:text-gray-500'
+                    : 'text-gray-300 hover:text-gray-400'
                 }`}
               >
                 {item.label}
@@ -414,7 +414,7 @@ const Navbar = () => {
                 <div className="z-20">
                   {/* Toggle Button */}
                   <button
-                    className="flex items-center justify-between w-full font-medium text-gray-900 focus:outline-none rounded-xl bg-blue-50/50 px-4 py-3 hover:bg-blue-100 transition-colors group"
+                    className="flex items-center justify-between w-full font-medium text-gray-900 focus:outline-none rounded-xl bg-blue-50/50 px-4 py-3 hover:bg-blue-100 transition-colors duration-300 group"
                     onClick={() => setIsCategoriesOpen((prev) => !prev)}
                   >
                     <div className="flex items-center">
@@ -424,24 +424,25 @@ const Navbar = () => {
                       <span className="text-lg font-medium animate-fadeUp">Categories</span>
                     </div>
                     <ChevronDown
-                      className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isCategoriesOpen ? 'rotate-180' : ''}`}
+                      className={`h-5 w-5 text-gray-500 transition-transform duration-300 ${isCategoriesOpen ? 'rotate-180' : ''}`}
                     />
                   </button>
 
                   {/* Category List */}
                   <div
-                    className={`transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-[500px] mt-2' : 'max-h-0'}`}
+                    className={`transition-all duration-500 ease-in-out overflow-hidden ${isCategoriesOpen ? 'max-h-[500px] mt-2 opacity-100' : 'max-h-0 opacity-0'}`}
                   >
                     <div className="pl-2">
                       {categories.map((cat, index) => (
                         <a
                           key={cat}
                           href="#"
-                          className="flex items-center py-2 px-4 text-base text-gray-600 hover:text-blue-600 cursor-pointer transition-colors group"
+                          className="flex items-center py-2 px-4 text-base text-gray-600 hover:text-blue-600 cursor-pointer transition-colors duration-200 group animate-fadeUp"
                           onClick={closeMobileMenu}
+                          style={{ animationDelay: `${index * 50}ms` }}
                         >
-                          <span className="w-2 h-2 mr-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                          <span className="group-hover:translate-x-1 transition-transform animate-fadeUp">
+                          <span className="w-2 h-2 mr-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></span>
+                          <span className="group-hover:translate-x-1 transition-transform duration-200">
                             {cat}
                           </span>
                         </a>
@@ -457,7 +458,10 @@ const Navbar = () => {
             
             {/* CSS animations */}
             <style jsx global>{`
-              @keyframes fadeInBg { from { opacity: 0; } to { opacity: 1; } }
+              @keyframes fadeInBg { 
+                from { opacity: 0; } 
+                to { opacity: 1; } 
+              }
               @keyframes aiMenuIn { 
                 0% { opacity: 0; transform: translateY(10px) scale(0.98); } 
                 100% { opacity: 1; transform: translateY(0) scale(var(--menu-scale)); } 
@@ -471,9 +475,6 @@ const Navbar = () => {
                 0% { opacity: 0; transform: translateY(5px); }
                 100% { opacity: 1; transform: translateY(0); }
               }
-              .animate-aiMenuIn { animation: aiMenuIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-              .animate-floatIn { animation: floatIn 0.2s ease-out forwards; }
-
               @keyframes fadeUp {
                 0% {
                   opacity: 0;
@@ -484,10 +485,9 @@ const Navbar = () => {
                   transform: translateY(0);
                 }
               }
-
-              .animate-fadeUp {
-                animation: fadeUp 0.3s ease forwards;
-              }
+              .animate-aiMenuIn { animation: aiMenuIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+              .animate-floatIn { animation: floatIn 0.2s ease-out forwards; }
+              .animate-fadeUp { animation: fadeUp 0.3s ease forwards; }
             `}</style>
           </>
         )}
