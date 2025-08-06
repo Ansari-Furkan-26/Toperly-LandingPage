@@ -125,7 +125,7 @@ const CourseDetail: React.FC = () => {
   }
   
   return (
-    <div className="min-h-screen mt-28 bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen mt-16 md:mt-28 bg-gradient-to-br from-gray-50 to-blue-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -165,16 +165,16 @@ const CourseDetail: React.FC = () => {
     </button>
     <div className="absolute bottom-6 left-6 right-6">
       <div className="flex items-center space-x-3 mb-4">
-        <span className={`px-3 py-1 rounded-full text-sm font-medium border capitalize flex items-center ${getLevelColor(course.level)}`}>
+        {/* <span className={`px-3 py-1 rounded-full text-sm font-medium border capitalize flex items-center ${getLevelColor(course.level)}`}>
           {getLevelIcon(course.level)}
           <span className="ml-1">{course.level}</span>
-        </span>
-        {course.isPublished === 'approved' && (
+        </span> */}
+        {/* {course.isPublished === 'approved' && (
           <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
             <CheckCircle className="w-4 h-4 mr-1" />
             Published
           </span>
-        )}
+        )} */}
       </div>
       <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
         {course.title}
@@ -241,7 +241,7 @@ const CourseDetail: React.FC = () => {
                   className="w-16 h-16 rounded-full border-4 border-blue-100"
                 />
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-900">
+                  <h3 className="md:text-xl font-semibold text-gray-900">
                     {typeof course.instructor === 'string' ? course.instructor : course.instructor?.name}
                   </h3>
                   <p className="text-blue-600 font-medium mb-2">Expert Instructor</p>

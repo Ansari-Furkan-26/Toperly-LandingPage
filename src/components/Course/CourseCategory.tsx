@@ -1,7 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, Users, PlayCircle, BookOpen, ChevronRight as ChevronRightIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Users, Star, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+
+// ...Course interface here as per your code above...
 interface Course {
   _id: string;
   title: string;
@@ -23,14 +25,23 @@ interface Course {
   __v: number;
 }
 
-const ProfessionalCourseSection: React.FC = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
-  // Keep references for each horizontal scroll section
-  const swiperRefs = useRef<{ [category: string]: HTMLDivElement | null }>({});
+function groupCoursesByCategory(courses) {
+  const map = {};
+  courses.forEach(course => {
+    const cat = course.category || 'Other';
+    if (!map[cat]) map[cat] = [];
+    map[cat].push(course);
+  });
+  return map;
+}
+
+const ProfessionalCourseSection = () => {
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -38,14 +49,14 @@ const ProfessionalCourseSection: React.FC = () => {
         const response = await fetch('https://toperly.onrender.com/api/courses/');
         if (!response.ok) throw new Error('Failed to fetch courses');
         const result = await response.json();
-        // Your mapping logic here, as before...
-        const mappedCourses = result?.map((course: any) => ({
+        // Map course as in your code
+        const mappedCourses = result?.map((course) => ({
           _id: course._id,
           title: course.title,
           description: course.description,
           instructor: course.instructor || 'Unknown Instructor',
           category: course.category,
-          level: course.level as 'Beginner' | 'Intermediate' | 'Advanced',
+          level: course.level,
           price: course.price,
           duration: course.duration,
           isPublished: course.isPublished,
@@ -61,7 +72,7 @@ const ProfessionalCourseSection: React.FC = () => {
         }));
         setCourses(mappedCourses);
         setLoading(false);
-      } catch (err: any) {
+      } catch (err) {
         setError(err.message);
         setLoading(false);
       }
@@ -69,19 +80,9 @@ const ProfessionalCourseSection: React.FC = () => {
     fetchCourses();
   }, []);
 
-  // (1) Group courses by category
-  const coursesByCategory = groupCoursesByCategory(courses);
-  const categories = Object.keys(coursesByCategory);
-
-  // (2) Horizontal scroll controls per category
-  const slide = (category: string, offset: number) => {
-    const ref = swiperRefs.current[category];
-    if (ref) ref.scrollBy({ left: offset, behavior: 'smooth' });
-  };
-
-  // Helper functions from your original code...
-  const formatPrice = (price: number) => `₹${price.toFixed(2)}`;
-  const getLevelColor = (level: string) => {
+  // Helper
+  const formatPrice = (price) => `₹${price.toFixed(2)}`;
+  const getLevelColor = (level) => {
     switch (level) {
       case 'Beginner': return 'bg-green-100 text-green-800';
       case 'Intermediate': return 'bg-yellow-100 text-yellow-800';
@@ -93,10 +94,13 @@ const ProfessionalCourseSection: React.FC = () => {
   if (loading) return <div className="text-center py-16">Loading...</div>;
   if (error) return <div className="text-center py-16 text-red-600">Error: {error}</div>;
 
+  // Responsive limits: 8 for desktop, 4 for mobile
+  const coursesByCategory = groupCoursesByCategory(courses);
+  const categories = Object.keys(coursesByCategory);
+
   return (
     <section className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-16">
-        {/* Header (single) */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <div>
             <div className="flex items-center mb-2">
@@ -112,38 +116,38 @@ const ProfessionalCourseSection: React.FC = () => {
           </div>
         </div>
 
-        {/* For each category, show a titled horizontal scroller */}
-        {categories.map((category) => (
-          <div key={category} className="mb-12">
-            {/* Category header & scroll buttons */}
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-bold text-gray-800">{category} Courses</h3>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => slide(category, -400)}
-                  className="p-2 rounded-full border-2 border-gray-200 text-gray-400 hover:border-blue-500 hover:text-blue-600 transition disabled:opacity-30"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => slide(category, 400)}
-                  className="p-2 rounded-full border-2 border-gray-200 text-gray-400 hover:border-blue-500 hover:text-blue-600 transition disabled:opacity-30"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
+        {categories.map((category) => {
+          const allCourses = coursesByCategory[category];
+          const showCourses = allCourses.slice(0, 2); //later update to 8
+          const isMore = allCourses.length > 1; //later update to 8
+
+          return (
+            <div key={category} className="mb-12">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-2xl font-bold text-gray-800">{category} Courses</h3>
+                {isMore &&
+                  <button
+                    className="flex items-center text-blue-600 font-semibold hover:underline"
+                    onClick={() => navigate(`/courses/category/${encodeURIComponent(category)}`)}
+                  >
+                    View All
+                    <ChevronRightIcon className="w-4 h-4 ml-1" />
+                  </button>
+                }
               </div>
-            </div>
-            {/* Horizontal Scrollable course cards */}
-            <div
-              ref={el => { swiperRefs.current[category] = el; }}
-              className="flex gap-6 overflow-x-auto scrollbar-hide pb-4"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-            >
-              {coursesByCategory[category]?.map((course) => (
-                <div
+              {/* Grid: 4/row desktop, 2/row mobile, show only 8 or 4 */}
+              <div className="
+                grid gap-6
+                grid-cols-1
+                sm:grid-cols-2
+                md:grid-cols-4
+              ">
+                {/* Show max 4 on mobile, 8 on desktop */}
+                {showCourses.slice(0, window.innerWidth < 640 ? 4 : 8).map(course => (
+                   <div
                   key={course._id}
-                  className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
-                  onClick={() => navigate(`/courses/${course._id}`)}
+                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer flex flex-col"
+ onClick={() => navigate(`/courses/${course._id}`)}
                 >
                   {/* Image */}
                   <div className="relative">
@@ -153,7 +157,7 @@ const ProfessionalCourseSection: React.FC = () => {
                       className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
-                      <PlayCircle className="w-3 h-3 mr-1" />
+                      {/* <PlayCircle className="w-3 h-3 mr-1" /> */}
                       {course.duration ? `${course.duration} min` : 'N/A'}
                     </div>
                   </div>
@@ -213,25 +217,14 @@ const ProfessionalCourseSection: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
 };
 
-// Helper outside component
-function groupCoursesByCategory(courses: Course[]): { [category: string]: Course[] } {
-  const map: { [category: string]: Course[] } = {};
-  courses.forEach(course => {
-    const cat = course.category || 'Other';
-    if (!map[cat]) map[cat] = [];
-    map[cat].push(course);
-  });
-  return map;
-}
-
 export default ProfessionalCourseSection;
-

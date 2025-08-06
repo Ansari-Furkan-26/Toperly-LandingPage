@@ -10,7 +10,7 @@ import Blog from "./pages/BlogPage";
 import Contact from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import CourseDetailModal from "./pages/CourseDetailPage";
+import CategoryCoursesPage from "./components/Course/CategoryCoursesPage";
 import CourseDetail from "./components/Course/CourseDetail";
 
 const queryClient = new QueryClient();
@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />          
           <Route path="/courses/:id" element={<CourseDetail />} />
+           <Route path="/courses/category/:category" element={<CategoryCoursesPage />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/contact-us" element={<Contact />} />
           

@@ -44,8 +44,8 @@ export default function ExpertisePage() {
               industries
             </span>
           </h2>
-          <p className="text-gray-600 mb-5 text-justify mt-10">
-            Lorem ipsum dolor sit amet, it maiores inventore natus, rem illum qui hic ea numquam ut dignissimos possimus quibusdam deserunt accusamus optio eius libero illo modi voluptatibus eveniet sequi a nostrum dolor necessitatibus? Quia, reiciendis cumque sed distinctio animi quos, molestiae similique, quisquam sit rem deleniti qui ab pariatur quod corporis autem in ducimus libero porro ipsum. Reiciendis, fuga consectetur nemo voluptatum neque veniam saepe voluptatem rerum quisquam maiores eligendi ipsa reprehenderit mollitia aperiam debitis illum dolore, quidem dignissimos inventore pariatur culpa! Nam esse eos neque?
+          <p className="text-gray-600 mb-5 text-justify md:mt-10">
+            Lorem ipsum dolor sit amet, it maiores inventore natus, rem illum qui hic ea numquam ut dignissimos possimus quibusdam deserunt neque?
           </p>
         </div>
       </div>
