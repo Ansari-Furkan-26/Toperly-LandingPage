@@ -151,8 +151,8 @@ const Navbar = () => {
 
   const topNavItems = [
     { label: 'Welcome to Toperly', href: '#' },
-    { label: 'Become an Instructor', href: '#' },
-    { label: 'My learning', href: '#' }
+    { label: 'Become an Instructor', href: 'https://toperly-dashboard-unsquare.netlify.app/auth' },
+    { label: 'My learning', href: 'https://toperly-dashboard-unsquare.netlify.app/auth' }
   ];
 
   return (
