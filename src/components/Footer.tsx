@@ -56,13 +56,13 @@ const Footer = () => {
         {/* Newsletter Section */}
         <div className="py-12 border-b border-gray-800">
           <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-5xl mx-40 font-bold mb-4 text-white">
+            <h3 className="text-2xl md:text-5xl md:mx-40 font-bold mb-4 text-white">
               Stay Updated with{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 AI Trends
               </span>
             </h3>
-            <p className="text-2xl mx-10 text-gray-400 mb-6">
+            <p className="text-sm md:text-2xl md:mx-10 text-gray-400 mb-6">
               Get the latest insights, course updates, and industry trends delivered to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
