@@ -1,12 +1,15 @@
+
 import React, { useState, useRef, useEffect } from 'react';
-import { Clock, Users, Star, Play, ArrowRight, Brain, Code, TrendingUp, Award, Zap, CheckCircle, Timer, Globe, ChevronLeft, ChevronRight } from "lucide-react";
+import { Clock, Users, Star, Play, ArrowRight, Brain, Code, TrendingUp, Award, CheckCircle, Timer, Globe, ChevronLeft, ChevronRight } from "lucide-react";
 
 const CoursesSection = () => {
-  const [activeIndex, setActiveIndex] = useState(1); // Only one course, so start at 0
+  const [activeIndex, setActiveIndex] = useState(1); // Start with middle card
+  const [isVisible, setIsVisible] = useState(false);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const currentX = useRef(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const startTime = useRef(0);
 
   const courses = [
@@ -15,7 +18,7 @@ const CoursesSection = () => {
       title: 'Machine Learning Fundamentals',
       description:
         'Master the core concepts of machine learning with hands-on projects, real-world applications, and industry best practices from Google engineers.',
-      instructor: '507f1f77bcf86cd799439011', // Placeholder ObjectId for Dr. Sarah Chen
+      instructor: '507f1f77bcf86cd799439011',
       category: 'Machine Learning',
       level: 'beginner',
       price: 199,
@@ -29,12 +32,13 @@ const CoursesSection = () => {
       totalReviews: 2834,
       createdAt: new Date('2025-07-01T00:00:00Z'),
       updatedAt: new Date('2025-08-01T00:00:00Z'),
-    },{
-      customId: 'COURSE001',
-      title: 'Machine Learning Fundamentals',
+    },
+    {
+      customId: 'COURSE002',
+      title: 'Political Science Essentials',
       description:
         'Master the core concepts of machine learning with hands-on projects, real-world applications, and industry best practices from Google engineers.',
-      instructor: '507f1f77bcf86cd799439011', // Placeholder ObjectId for Dr. Sarah Chen
+      instructor: '507f1f77bcf86cd799439011',
       category: 'Machine Learning',
       level: 'beginner',
       price: 199,
@@ -48,12 +52,13 @@ const CoursesSection = () => {
       totalReviews: 2834,
       createdAt: new Date('2025-07-01T00:00:00Z'),
       updatedAt: new Date('2025-08-01T00:00:00Z'),
-    },{
-      customId: 'COURSE001',
-      title: 'Machine Learning Fundamentals',
+    },
+    {
+      customId: 'COURSE003',
+      title: 'Python Programming',
       description:
         'Master the core concepts of machine learning with hands-on projects, real-world applications, and industry best practices from Google engineers.',
-      instructor: '507f1f77bcf86cd799439011', // Placeholder ObjectId for Dr. Sarah Chen
+      instructor: '507f1f77bcf86cd799439011',
       category: 'Machine Learning',
       level: 'beginner',
       price: 199,
@@ -73,13 +78,13 @@ const CoursesSection = () => {
   // Placeholder mappings for missing fields
   const mapCourseData = (course: any) => ({
     ...course,
-    subtitle: 'Complete Guide to ML Mastery', // Derived from original data
-    totalHours: `${course.duration} hours`, // Convert duration to string
-    students: '12,547', // Placeholder from original data
-    instructorName: 'Dr. Sarah Chen', // Placeholder for ObjectId
-    instructorTitle: 'AI Expert', // Placeholder
-    popular: false, // Not provided, default to false
-    originalPrice: '₹299', // Placeholder from original data
+    subtitle: 'Complete Guide to ML Mastery',
+    totalHours: `${course.duration} hours`,
+    students: '12,547',
+    instructorName: 'Dr. Sarah Chen',
+    instructorTitle: 'AI Expert',
+    popular: false,
+    originalPrice: '₹299',
   });
 
   const getLevelColor = (level: string) => {
@@ -95,7 +100,7 @@ const CoursesSection = () => {
     }
   };
 
-  // Simplified touch/mouse handlers
+  // Touch/mouse handlers
   const handleStart = (clientX: number) => {
     isDragging.current = true;
     startX.current = clientX;
@@ -159,23 +164,81 @@ const CoursesSection = () => {
   };
 
   const getTransform = () => {
-    const cardWidth = 320;
-    const gap = 0;
+    const cardWidth = 288; // 72rem (w-72) = 288px
+    const gap = 16; // mx-2 = 8px each side
     const containerWidth = window.innerWidth;
     const centerPosition = (containerWidth - cardWidth) / 2;
     const cardPosition = activeIndex * (cardWidth + gap);
     return centerPosition - cardPosition;
   };
 
+  // Intersection Observer to trigger animations on view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.2 } // Trigger when 20% of section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+    <section ref={sectionRef} className="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <style>
+          {`
+            @keyframes fadeUp {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+
+            .animate-fade-up {
+              animation: fadeUp 0.6s ease-out forwards;
+            }
+
+            .hidden-animation {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+
+            .carousel-card {
+              transition: all 0.5s ease-out;
+            }
+
+            .carousel-card-active {
+              opacity: 1;
+              transform: scale(1.05);
+            }
+
+            .carousel-card-inactive {
+              opacity: 0.7;
+              transform: scale(0.95);
+            }
+          `}
+        </style>
+
+        <div className={`text-center mb-16 ${isVisible ? 'animate-fade-up' : 'hidden-animation'}`}>
           <div className="inline-flex items-center px-6 py-3 bg-blue-100 backdrop-blur-sm rounded-full text-sm font-semibold text-blue-800 mb-6 border border-blue-200">
             <Brain className="w-4 h-4 mr-2 text-blue-600" />
             AI-Powered Course Catalog
@@ -199,13 +262,14 @@ const CoursesSection = () => {
             return (
               <div
                 key={course.customId}
-                className={`relative overflow-hidden transition-all duration-700 hover:shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg`}
+                className={`relative overflow-hidden transition-all duration-700 hover:shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg ${isVisible ? 'animate-fade-up' : 'hidden-animation'}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-                  {mappedCourse.newContent && (
+                  {mappedCourse.popular && (
                     <div className="border border-emerald-300 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
-                      <Zap className="w-3 h-3 mr-1" />
-                      New Content
+                      <TrendingUp className="w-3 h-3 mr-1" />
+                      Popular
                     </div>
                   )}
                 </div>
@@ -265,7 +329,7 @@ const CoursesSection = () => {
 
                     <button
                       className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center"
-                      onClick={() => alert('Proceed to enrollment...')} // Placeholder for enrollment logic
+                      onClick={() => alert('Proceed to enrollment...')}
                     >
                       <Award className="w-4 h-4 mr-2" />
                       Enroll Now & Start Learning
@@ -280,7 +344,7 @@ const CoursesSection = () => {
 
         {/* Mobile Carousel */}
         <div className="lg:hidden mb-16 mx-auto">
-          <div className="relative -ml-5">
+          <div className="relative -ml-11">
             <div
               ref={carouselRef}
               className="flex ml-6 transition-transform duration-500 ease-out"
@@ -302,14 +366,17 @@ const CoursesSection = () => {
                 return (
                   <div
                     key={course.customId}
-                    className={`w-72 flex-shrink-0 transition-all mx-2 duration-500 select-none ${
-                      isActive ? 'opacity-100 scale-105' : 'opacity-70 scale-95'
+                    className={`w-72 flex-shrink-0 mx-2 select-none carousel-card ${
+                      isVisible
+                        ? isActive
+                          ? 'carousel-card-active'
+                          : 'carousel-card-inactive'
+                        : 'opacity-70 scale-95'
                     }`}
                   >
                     <div
-                      className={`relative overflow-hidden transition-all duration-500 shadow-xl bg-white backdrop-blur-sm max-w-72 rounded-2xl border border-gray-200`}
+                      className="relative overflow-hidden transition-all duration-500 shadow-xl bg-white backdrop-blur-sm max-w-72 rounded-2xl border border-gray-200"
                     >
-
                       <div className="relative overflow-hidden rounded-t-2xl">
                         <img
                           src={mappedCourse.thumbnail.url}
@@ -351,16 +418,16 @@ const CoursesSection = () => {
                           </div>
                         </div>
 
-                      <div className="pt-4 border-t border-gray-200">
+                        <div className="pt-4 border-t border-gray-200">
                           <button
                             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-white py-3 px-4 rounded-lg font-semibold flex items-center justify-center"
-                            onClick={() => alert('Proceed to enrollment...')}>
+                            onClick={() => alert('Proceed to enrollment...')}
+                          >
                             <Award className="w-4 h-4 mr-2" />
                             Enroll Now for ₹{mappedCourse.price}
                             <ArrowRight className="w-4 h-4 ml-2" />
                           </button>
                         </div>
-
                       </div>
                     </div>
                   </div>
@@ -369,7 +436,6 @@ const CoursesSection = () => {
             </div>
           </div>
 
-          {/* Dots Indicator (optional with one course) */}
           {courses.length > 1 && (
             <div className="flex justify-center mt-6 space-x-2">
               {courses.map((_, index) => (
@@ -386,21 +452,21 @@ const CoursesSection = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center bg-gradient-to-r from-blue-100 to-purple-100 backdrop-blur-sm rounded-3xl p-12 border border-blue-200">
+        <div className={`text-center bg-gradient-to-r from-blue-100 to-purple-100 backdrop-blur-sm rounded-3xl py-6 px-10 border border-blue-200 ${isVisible ? 'animate-fade-up' : 'hidden-animation'}`}>
           <div className="max-w-3xl mx-auto">
             <div className="inline-flex items-center px-6 py-3 bg-blue-200 rounded-full text-sm font-medium text-blue-800 mb-6">
               <Brain className="w-4 h-4 mr-2" />
-              AI-Powered Learning Experience
+              AI-Powered Experience
               <div className="w-2 h-2 bg-blue-600 rounded-full ml-2 animate-pulse"></div>
             </div>
 
-            <h3 className="text-3xl font-bold mb-4">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">
               Ready to Join the{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 AI Revolution?
               </span>
             </h3>
-            <p className="text-sm md:text-lg text-gray-600 mb-8">
+            <p className="hidden md:block text-sm md:text-lg text-gray-600 mb-8">
               New courses added monthly. Join our community of AI professionals and accelerate your career with cutting-edge skills.
             </p>
 
@@ -409,10 +475,6 @@ const CoursesSection = () => {
                 <TrendingUp className="w-5 h-5 mr-2" />
                 Explore All Courses
                 <ArrowRight className="w-5 h-5 ml-2" />
-              </button>
-              <button className="border border-blue-300 text-blue-600 hover:bg-blue-50 hover:border-blue-600 py-3 px-6 rounded-lg font-semibold flex items-center justify-center transition-all">
-                <Users className="w-5 h-5 mr-2" />
-                Join Community
               </button>
             </div>
           </div>

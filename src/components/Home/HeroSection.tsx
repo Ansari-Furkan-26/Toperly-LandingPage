@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Brain, Zap, TrendingUp, ArrowRight, Shield, Cpu, Database, Users, Atom, Network, Eye, Sparkles } from 'lucide-react';
 
 const DarkAIHero = () => {
-  const [loadingStage, setLoadingStage] = useState('bg'); // 'bg' -> 'content' -> 'complete'
-  const [showContent, setShowContent] = useState(false);
+  const [loadingStage, setLoadingStage] = useState('bg');
+  const [showTitle, setShowTitle] = useState(false);
+  const [showSubtitle, setShowSubtitle] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [showStats, setShowStats] = useState(false);
   const [animateChip, setAnimateChip] = useState(false);
 
   useEffect(() => {
-    // Simultaneous loading sequence
+    // Sequenced animation timing
     const sequence = [
       { delay: 0, action: () => setLoadingStage('bg') },
       { delay: 500, action: () => setLoadingStage('content') },
-      { delay: 600, action: () => setShowContent(true) },
-      { delay: 600, action: () => setAnimateChip(true) }, // Start chip animation at same time
+      { delay: 600, action: () => setShowTitle(true) },        // Title first
+      { delay: 1200, action: () => setShowSubtitle(true) },    // Subtitle after title
+      { delay: 1600, action: () => setShowButton(true) },      // Button from right
+      { delay: 2000, action: () => setShowStats(true) },       // Stats fade up last
+      { delay: 600, action: () => setAnimateChip(true) },      // Chip animation starts early
       { delay: 800, action: () => setLoadingStage('complete') }
     ];
 
@@ -71,17 +77,13 @@ const DarkAIHero = () => {
       <div className="container mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left Column - Enhanced Content Animation */}
-          <div className={`text-left transition-all duration-1000 ${
-            showContent 
-              ? 'opacity-100 transform translate-y-0' 
-              : 'opacity-0 transform translate-y-8'
-          }`}>
+          {/* Left Column - Sequenced Content Animation */}
+          <div className="text-left">
             
-            {/* Premium Badge with Slide from Left Animation */}
+            {/* Premium Badge */}
             <div 
               className={`inline-flex items-center px-6 py-3 backdrop-blur-sm rounded-full text-sm font-semibold mb-8 border shadow-2xl transition-all duration-800 ${
-                showContent ? 'animate-slide-from-left' : 'opacity-0 transform translate-x-[-100px]'
+                showTitle ? 'animate-badge-slide' : 'opacity-0 transform translate-x-[-100px]'
               } bg-emerald-500/20 text-emerald-400 border-emerald-500/30`}
             >
               <Shield className="w-4 h-4 mr-2 animate-spin-slow text-emerald-400" />
@@ -89,90 +91,67 @@ const DarkAIHero = () => {
               <div className="w-2 h-2 rounded-full ml-2 animate-pulse-infinite bg-emerald-400"></div>
             </div>
             
-            {/* Main Heading with Fade Up Animation */}
-            <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.9] mb-8 tracking-tight text-white transition-all duration-1000 ${
-              showContent ? 'animate-fade-up' : 'opacity-0 transform translate-y-8'
+            {/* Main Title with Full Gradient Animation */}
+            <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.9] mb-8 tracking-tight transition-all duration-1000 ${
+              showTitle ? 'animate-title-gradient-reveal' : 'opacity-0 transform translate-y-8'
             }`}>
-              Making{" "}
-              <span className={`bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent transition-all duration-1000 ${
-                showContent ? 'animate-gradient-reveal-infinite' : 'opacity-0'
-              }`}>
-                India
-              </span>
-              <span 
-                className={`relative block transition-all duration-1000 ${
-                  showContent ? 'animate-fade-up opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-              >
-                <div className="absolute -inset-2 bg-emerald-400/20 opacity-20 blur-xl animate-pulse-glow-infinite"></div>
-              </span>
-              <span 
-                className={`block text-4xl sm:text-5xl lg:text-6xl font-light opacity-80 text-white transition-all duration-1000 ${
-                  showContent ? 'animate-fade-up' : 'opacity-0 translate-y-8'
-                }`}
-              >
-                Ready for the Future with{" "}
-              </span>
-              <span 
-                className={`bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent transition-all duration-1000 ${
-                  showContent ? 'animate-gradient-reveal-infinite' : 'opacity-0'
-                }`}
-              >
-                AI
+              <span className="gradient-animated-text">
+                Making India Ready for the Future with AI
               </span>
             </h1>
             
-            {/* Description - Slide from Right */}
+            {/* Subtitle - Animated from Right */}
             <p 
-              className={`sm:text-xl mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed text-gray-300 transition-all duration-1000 ${
-                showContent ? 'animate-slide-from-right' : 'opacity-0 transform translate-x-[100px]'
+              className={`sm:text-xl mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed text-gray-300 transition-all duration-800 ${
+                showSubtitle ? 'animate-subtitle-slide' : 'opacity-0 transform translate-x-[100px]'
               }`}
             >
               Join <span className="font-semibold text-emerald-400 animate-text-glow">50,000+</span> professionals mastering 
               cutting-edge AI skills through our immersive, verifiable learning platform.
             </p>
 
-            {/* Action Button - Scale In Animation */}
+            {/* Action Button - Slide from Right */}
             <div 
-              className={`flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16 transition-all duration-1000 ${
-                showContent ? 'animate-scale-in' : 'opacity-0 transform scale-75'
+              className={`flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16 transition-all duration-800 ${
+                showButton ? 'animate-button-slide' : 'opacity-0 transform translate-x-[100px]'
               }`}
             >
               <button className="group relative px-8 py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r from-emerald-500 to-cyan-500 text-black shadow-emerald-500/25 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 animate-button-pulse">
-                <Zap className="w-5 h-5 mr-3 inline group-hover:animate-bounce animate-icon-rotate" />
+                <Zap className="w-5 h-5 mr-3 inline group-hover:animate-bounce " />
                 Schedule Demo
                 <ArrowRight className="w-5 h-5 ml-3 inline group-hover:translate-x-1 transition-transform animate-arrow-bounce" />
                 <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
             </div>
 
-            {/* Stats with Mixed Animations */}
+            {/* Stats - Fade Up Last */}
             <div className="grid grid-cols-3 gap-8 text-left">
               {[
-                { value: '50K+', label: 'AI Professionals', icon: Users, animation: 'animate-slide-from-left' },
-                { value: '200+', label: 'Expert Courses', icon: Cpu, animation: 'animate-scale-in' },
-                { value: '98%', label: 'Success Rate', icon: TrendingUp, animation: 'animate-slide-from-right' }
+                { value: '50K+', label: 'AI Professionals', icon: Users, delay: '0ms' },
+                { value: '200+', label: 'Expert Courses', icon: Cpu, delay: '150ms' },
+                { value: '98%', label: 'Our Success Rate', icon: TrendingUp, delay: '300ms' }
               ].map((stat, index) => (
                 <div 
                   key={index}
-                  className={`group transition-all duration-1000 ${
-                    showContent ? stat.animation : 'opacity-0'
+                  className={`group transition-all duration-800 ${
+                    showStats ? 'animate-stats-fade-up' : 'opacity-0 transform translate-y-[30px]'
                   }`}
+                  style={{ transitionDelay: stat.delay }}
                 >
                   <div className="flex items-center justify-center lg:justify-start mb-2">
-                    <div className="text-3xl sm:text-4xl font-black mr-2 text-emerald-400 animate-number-pulse">
+                    <div className="text-3xl sm:text-4xl font-black mr-2 text-emerald-400">
                       {stat.value}
                     </div>
-                    <stat.icon className="w-6 h-6 group-hover:animate-bounce text-emerald-400 animate-icon-float" />
+                    <stat.icon className="w-6 h-6 group-hover:animate-bounce text-emerald-400" />
                   </div>
                   <div className="text-sm font-medium text-gray-400">
                     {stat.label}
                   </div>
                   <div className="w-full h-1 rounded-full mt-2 bg-emerald-200/20">
                     <div 
-                      className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 animate-progress-infinite" 
+                      className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 animate-progress" 
                       style={{ 
-                        width: stat.value === '98%' ? '98%' : '100%'
+                        width: stat.value === '98%' ? '92%' : '100%'
                       }}
                     ></div>
                   </div>
@@ -181,10 +160,10 @@ const DarkAIHero = () => {
             </div>
           </div>
 
-          {/* Right Column - Enhanced AI Chip Visualization with Scale In */}
+          {/* Right Column - AI Chip (unchanged, as requested) */}
           <div 
             className={`relative transition-all duration-1000 ${
-              showContent 
+              loadingStage !== 'bg' 
                 ? 'opacity-100 transform translate-y-0 scale-100' 
                 : 'opacity-0 transform translate-y-8 scale-90'
             }`}
@@ -264,7 +243,7 @@ const DarkAIHero = () => {
                   >
                     <item.icon className={`w-6 h-6 ${
                       item.color === 'emerald' ? 'text-emerald-400' : 'text-cyan-400'
-                    } ${animateChip ? 'animate-icon-spin' : ''}`} />
+                    } `} />
                   </div>
                 ))}
 
@@ -287,7 +266,7 @@ const DarkAIHero = () => {
                 animateChip ? 'animate-info-card-reveal' : 'opacity-0 scale-75'
               }`}>
                 <div className="flex items-center space-x-2">
-                  <Sparkles className="w-6 h-6 animate-sparkle-rotate text-emerald-400" />
+                  <Sparkles className="w-6 h-6  text-emerald-400" />
                   <div>
                     <div className="text-xs font-semibold text-emerald-400">
                       Neural Processing
@@ -343,41 +322,63 @@ const DarkAIHero = () => {
           100% { transform: translateX(-100%); opacity: 0; }
         }
 
-        /* Varied Content Animations */
-        @keyframes slide-from-left {
+        /* New Sequenced Content Animations */
+        @keyframes badge-slide {
           0% { transform: translateX(-100px); opacity: 0; }
           100% { transform: translateX(0); opacity: 1; }
         }
         
-        @keyframes slide-from-right {
+        @keyframes title-gradient-reveal {
+          0% { 
+            transform: translateY(30px); 
+            opacity: 0; 
+          }
+          100% { 
+            transform: translateY(0); 
+            opacity: 1; 
+          }
+        }
+        
+        @keyframes subtitle-slide {
           0% { transform: translateX(100px); opacity: 0; }
           100% { transform: translateX(0); opacity: 1; }
         }
         
-        @keyframes fade-up {
+        @keyframes button-slide {
+          0% { transform: translateX(100px); opacity: 0; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes stats-fade-up {
           0% { transform: translateY(30px); opacity: 0; }
           100% { transform: translateY(0); opacity: 1; }
         }
-        
-        @keyframes scale-in {
-          0% { transform: scale(0.8); opacity: 0; }
-          100% { transform: scale(1); opacity: 1; }
+
+        /* Gradient Text Animation */
+        @keyframes gradient-text-flow {
+          0% { background-position: -200% center; }
+          50% { background-position: 200% center; }
+          100% { background-position: -200% center; }
         }
 
-        /* Infinite Animations */
-        @keyframes gradient-reveal-infinite {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
+        .gradient-animated-text {
+          background: linear-gradient(
+            90deg, 
+            #10b981 0%, 
+            #06b6d4 50%, 
+            #10b981 100%
+          );
+          background-size: 300% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradient-text-flow 20s ease-in-out infinite;
         }
-        
+
+        /* Existing Infinite Animations */
         @keyframes pulse-infinite {
           0%, 100% { opacity: 0.6; }
           50% { opacity: 1; }
-        }
-        
-        @keyframes pulse-glow-infinite {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 0.4; }
         }
         
         @keyframes spin-slow {
@@ -498,19 +499,15 @@ const DarkAIHero = () => {
         .animate-beam-flow { animation: beam-flow 3s ease-in-out infinite; }
         .animate-beam-flow-reverse { animation: beam-flow-reverse 3s ease-in-out infinite 1.5s; }
         
-        /* Content Animation Classes */
-        .animate-slide-from-left { animation: slide-from-left 0.8s ease-out forwards; }
-        .animate-slide-from-right { animation: slide-from-right 0.8s ease-out forwards; }
-        .animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
-        .animate-scale-in { animation: scale-in 0.8s ease-out forwards; }
+        /* New Sequenced Animation Classes */
+        .animate-badge-slide { animation: badge-slide 0.8s ease-out forwards; }
+        .animate-title-gradient-reveal { animation: title-gradient-reveal 0.8s ease-out forwards; }
+        .animate-subtitle-slide { animation: subtitle-slide 0.8s ease-out forwards; }
+        .animate-button-slide { animation: button-slide 0.8s ease-out forwards; }
+        .animate-stats-fade-up { animation: stats-fade-up 0.8s ease-out forwards; }
         
         /* Infinite Animation Classes */
-        .animate-gradient-reveal-infinite { 
-          background-size: 200% auto;
-          animation: gradient-reveal-infinite 3s ease-in-out infinite; 
-        }
         .animate-pulse-infinite { animation: pulse-infinite 2s ease-in-out infinite; }
-        .animate-pulse-glow-infinite { animation: pulse-glow-infinite 2s ease-in-out infinite; }
         .animate-spin-slow { animation: spin-slow 8s linear infinite; }
         .animate-text-glow { animation: text-glow 2s ease-in-out infinite; }
         .animate-button-pulse { animation: button-pulse 3s ease-in-out infinite; }

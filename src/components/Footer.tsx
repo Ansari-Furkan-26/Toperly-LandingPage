@@ -80,10 +80,7 @@ const Footer = () => {
             md:grid-cols-2
             lg:grid-cols-6
             grid-cols-1
-          "
-        > 
-        
-        
+          ">       
           {/* Brand & contact: mobile - flex row; md+ - block */}
           <div className="lg:col-span-2 flex flex-col md:flex-row md:space-x-6 lg:flex-col lg:space-x-0">
             

@@ -15,7 +15,7 @@ const VideoPitchSection = () => {
       />
 
       {/* Overlay */}
-      {/* <div className="absolute inset-0 bg-black/30"></div> */}
+      <div className="absolute inset-0 bg-black/30"></div>
 
       {/* Text Content */}
       <div className="absolute top-12 left-6 sm:left-12 text-white z-10">

@@ -172,11 +172,11 @@ const ProfessionalCourseSection: React.FC = () => {
               <BookOpen className="w-6 h-6 text-blue-600 mr-2" />
               <span className="text-blue-600 font-semibold text-sm uppercase tracking-wide">Professional Courses</span>
             </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
               Learn In-Demand Skills
             </h2>
-            <p className="text-lg text-gray-600">
-              Master cutting-edge technologies with expert-led courses trusted by professionals worldwide
+            <p className="md:text-lg text-gray-600">
+              Master AI tech with expert-led, trusted courses.
             </p>
           </div>
           <div className="flex items-center space-x-3">
