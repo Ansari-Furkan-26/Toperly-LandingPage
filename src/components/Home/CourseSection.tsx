@@ -23,6 +23,37 @@ interface Course {
   __v: number;
 }
 
+// 1. Skeleton Card Component
+function CourseCardSkeleton() {
+  return (
+    <div className="flex-none w-80 bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 animate-pulse">
+      <div className="relative">
+        <div className="w-full h-48 bg-gray-200" />
+      </div>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-3">
+          <span className="h-4 w-16 bg-gray-200 rounded" />
+          <span className="h-4 w-14 bg-gray-200 rounded" />
+        </div>
+        <div className="h-6 w-2/3 bg-gray-200 rounded mb-3" />
+        <div className="h-4 w-full bg-gray-200 rounded mb-3" />
+        <div className="flex items-center mb-3">
+          <div className="w-8 h-8 rounded-full bg-gray-200 mr-2" />
+          <span className="h-4 w-20 bg-gray-200 rounded" />
+        </div>
+        <div className="flex items-center mb-3">
+          <span className="h-4 w-28 bg-gray-200 rounded" />
+        </div>
+        <div className="flex items-center text-sm text-gray-500 mb-4 space-x-4">
+          <span className="h-4 w-20 bg-gray-200 rounded" />
+          <span className="h-4 w-20 bg-gray-200 rounded" />
+        </div>
+        <span className="h-6 w-24 bg-gray-200 rounded block" />
+      </div>
+    </div>
+  );
+}
+
 const ProfessionalCourseSection: React.FC = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [atStart, setAtStart] = useState(true);
@@ -32,21 +63,41 @@ const ProfessionalCourseSection: React.FC = () => {
   const swiperRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const handleCourseClick = (courseId: string) => {
+  // ...handles (slidePrev/slideNext/etc) and formatters are unchanged...
+   const handleCourseClick = (courseId: string) => {
     navigate(`/courses/${courseId}`);
   };
+  
+  const slidePrev = () => {
+    if (swiperRef.current) {
+      const container = swiperRef.current;
+      container.scrollBy({ left: -400, behavior: 'smooth' });
+      updateNavState();
+    }
+  };
 
-  // Fetch courses from API
+  const slideNext = () => {
+    if (swiperRef.current) {
+      const container = swiperRef.current;
+      container.scrollBy({ left: 400, behavior: 'smooth' });
+      updateNavState();
+    }
+  };
+
+  const updateNavState = () => {
+    if (swiperRef.current) {
+      const container = swiperRef.current;
+      setAtStart(container.scrollLeft <= 0);
+      setAtEnd(container.scrollLeft >= container.scrollWidth - container.clientWidth);
+    }
+  };
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await fetch('https://toperly.onrender.com/api/courses/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch courses');
-        }
+        if (!response.ok) throw new Error('Failed to fetch courses');
         const result = await response.json();
-        // Map API data to match Course interface
-        
         const mappedCourses = result?.map((course: any) => ({
           _id: course._id,
           title: course.title,
@@ -75,32 +126,10 @@ const ProfessionalCourseSection: React.FC = () => {
       }
     };
     fetchCourses();
+    // eslint-disable-next-line
   }, []);
 
-  const slidePrev = () => {
-    if (swiperRef.current) {
-      const container = swiperRef.current;
-      container.scrollBy({ left: -400, behavior: 'smooth' });
-      updateNavState();
-    }
-  };
-
-  const slideNext = () => {
-    if (swiperRef.current) {
-      const container = swiperRef.current;
-      container.scrollBy({ left: 400, behavior: 'smooth' });
-      updateNavState();
-    }
-  };
-
-  const updateNavState = () => {
-    if (swiperRef.current) {
-      const container = swiperRef.current;
-      setAtStart(container.scrollLeft <= 0);
-      setAtEnd(container.scrollLeft >= container.scrollWidth - container.clientWidth);
-    }
-  };
-
+    // Helper functions
   const formatPrice = (price: number) => `₹${price.toFixed(2)}`;
 
   const getLevelColor = (level: string) => {
@@ -111,19 +140,11 @@ const ProfessionalCourseSection: React.FC = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-
-  if (loading) {
-    return <div className="text-center py-16">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-16 text-red-600">Error: {error}</div>;
-  }
-
+  
   return (
     <section className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header (unchanged) */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center mb-2">
@@ -137,8 +158,7 @@ const ProfessionalCourseSection: React.FC = () => {
               Master cutting-edge technologies with expert-led courses trusted by professionals worldwide
             </p>
           </div>
-          
-          {/* Navigation */}
+          {/* Navigation (unchanged) */}
           <div className="flex items-center space-x-3">
             <button
               onClick={slidePrev}
@@ -165,7 +185,7 @@ const ProfessionalCourseSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Course Cards */}
+        {/* Course Cards OR Skeleton */}
         <div className="relative">
           <div 
             ref={swiperRef}
@@ -173,8 +193,18 @@ const ProfessionalCourseSection: React.FC = () => {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             onScroll={updateNavState}
           >
-            {courses?.map((course) => (
-              <div 
+            {loading ? (
+              // Render 4 skeletons while loading
+              Array.from({ length: 4 }).map((_, idx) => (
+                <CourseCardSkeleton key={idx} />
+              ))
+            ) : error ? (
+              // No cards on error
+              null
+            ) : (
+              // Real course cards
+              courses.map((course) => (
+                <div 
                 key={course._id} 
                 className="flex-none w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group cursor-pointer"
                 onClick={() => handleCourseClick(course._id)}
@@ -282,11 +312,14 @@ const ProfessionalCourseSection: React.FC = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              ))
+            )}
           </div>
+          {/* Show error below the cards, only if not loading */}
+          {!loading && error && (
+            <div className="text-center py-16 text-red-600">{error}</div>
+          )}
         </div>
-
-       
       </div>
     </section>
   );
