@@ -261,83 +261,85 @@ const CoursesSection = () => {
             const mappedCourse = mapCourseData(course);
             return (
               <div
-                key={course.customId}
-                className={`relative overflow-hidden transition-all duration-700 hover:shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg ${isVisible ? 'animate-fade-up' : 'hidden-animation'}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="absolute top-4 right-4 z-10 flex flex-col gap-2">
-                  {mappedCourse.popular && (
-                    <div className="border border-emerald-300 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
-                      <TrendingUp className="w-3 h-3 mr-1" />
-                      Popular
-                    </div>
-                  )}
-                </div>
+  key={course.customId}
+  className={`relative overflow-hidden transition-all duration-700 hover:shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg ${isVisible ? 'animate-fade-up' : 'hidden-animation'}`}
+  style={{ animationDelay: `${index * 0.1}s` }}
+>
+  <div className="absolute top-4 right-4 z-30 flex flex-col gap-2">
+    {mappedCourse.popular && (
+      <div className="border border-emerald-300 text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+        <TrendingUp className="w-3 h-3 mr-1" />
+        Popular
+      </div>
+    )}
+  </div>
 
-                <div className="relative overflow-hidden rounded-t-2xl">
-                  <img
-                    src={mappedCourse.thumbnail.url}
-                    alt={mappedCourse.title}
-                    className="w-full h-64 object-cover hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center justify-between text-white text-sm">
-                      <span className="font-semibold">{mappedCourse.totalHours}</span>
-                    </div>
-                  </div>
-                </div>
+  {/* Image container with LOW z-index */}
+  <div className="relative overflow-hidden rounded-t-2xl z-0">
+    <img
+      src={mappedCourse.thumbnail.url}
+      alt={mappedCourse.title}
+      className="w-full h-64 object-cover hover:scale-110 transition-transform duration-700"
+    />
+    <div className="absolute bottom-4 left-4 right-4">
+      <div className="flex items-center justify-between text-white text-sm">
+        <span className="font-semibold">{mappedCourse.totalHours}</span>
+      </div>
+    </div>
+  </div>
 
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <div className={`px-3 py-1 rounded-full text-sm font-medium border ${getLevelColor(mappedCourse.level)}`}>
-                      {mappedCourse.level.charAt(0).toUpperCase() + mappedCourse.level.slice(1)}
-                    </div>
-                    <div className="flex items-center space-x-1 text-sm text-gray-600">
-                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      <span className="font-semibold">{mappedCourse.rating}</span>
-                      <span>({mappedCourse.totalReviews.toLocaleString()})</span>
-                    </div>
-                  </div>
+  {/* Details container with HIGH z-index */}
+  <div className="p-6 -mt-20 relative z-20 bg-white/95 backdrop-blur-sm rounded-t-2xl">
+    <div className="flex items-center justify-between mb-3">
+      <div className={`px-3 py-1 rounded-full text-sm font-medium border  ${getLevelColor(mappedCourse.level)}`}>
+        {mappedCourse.level.charAt(0).toUpperCase() + mappedCourse.level.slice(1)}
+      </div>
+      <div className="flex items-center space-x-1 text-sm text-gray-600">
+        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+        <span className="font-semibold">{mappedCourse.rating}</span>
+        <span>({mappedCourse.totalReviews.toLocaleString()})</span>
+      </div>
+    </div>
 
-                  <h3 className="text-xl font-bold hover:text-blue-600 transition-colors mb-1">
-                    {mappedCourse.title}
-                  </h3>
-                  <p className="text-sm font-medium text-blue-600 mb-2">{mappedCourse.subtitle}</p>
+    <h3 className="text-xl font-bold hover:text-blue-600 transition-colors mb-1">
+      {mappedCourse.title}
+    </h3>
+    <p className="text-sm font-medium text-blue-600 mb-2">{mappedCourse.subtitle}</p>
 
-                  <div className="flex items-center space-x-3 mb-4 p-3 bg-blue-50 rounded-lg">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">
-                        {mappedCourse.instructorName.split(' ').map((n: string) => n[0]).join('')}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="text-sm font-semibold">{mappedCourse.instructorName}</div>
-                      <div className="text-xs text-gray-600">{mappedCourse.instructorTitle}</div>
-                    </div>
-                  </div>
+    <div className="flex items-center space-x-3 mb-4 p-3 bg-blue-50 rounded-lg">
+      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+        <span className="text-xs font-bold text-white">
+          {mappedCourse.instructorName.split(' ').map((n: string) => n[0]).join('')}
+        </span>
+      </div>
+      <div>
+        <div className="text-sm font-semibold">{mappedCourse.instructorName}</div>
+        <div className="text-xs text-gray-600">{mappedCourse.instructorTitle}</div>
+      </div>
+    </div>
 
-                  <div className="pt-4 border-t border-gray-200">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <div className="text-3xl font-black text-blue-600">₹{mappedCourse.price}</div>
-                        {mappedCourse.originalPrice && (
-                          <div className="text-lg text-gray-500 line-through">{mappedCourse.originalPrice}</div>
-                        )}
-                      </div>
-                    </div>
+    <div className="pt-4 border-t border-gray-200">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center space-x-2">
+          <div className="text-3xl font-black text-blue-600">₹{mappedCourse.price}</div>
+          {mappedCourse.originalPrice && (
+            <div className="text-lg text-gray-500 line-through">{mappedCourse.originalPrice}</div>
+          )}
+        </div>
+      </div>
 
-                    <button
-                      className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center"
-                      onClick={() => alert('Proceed to enrollment...')}
-                    >
-                      <Award className="w-4 h-4 mr-2" />
-                      Enroll Now & Start Learning
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </button>
-                  </div>
-                </div>
-              </div>
+      <button
+        className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-white py-3 px-6 rounded-lg font-semibold flex items-center justify-center"
+        onClick={() => alert('Proceed to enrollment...')}
+      >
+        <Award className="w-4 h-4 mr-2" />
+        Enroll Now & Start Learning
+        <ArrowRight className="w-4 h-4 ml-2" />
+      </button>
+    </div>
+  </div>
+</div>
+
             );
           })}
         </div>
@@ -372,11 +374,9 @@ const CoursesSection = () => {
                           ? 'carousel-card-active'
                           : 'carousel-card-inactive'
                         : 'opacity-70 scale-95'
-                    }`}
-                  >
+                    }`}>
                     <div
-                      className="relative overflow-hidden transition-all duration-500 shadow-xl bg-white backdrop-blur-sm max-w-72 rounded-2xl border border-gray-200"
-                    >
+                      className="relative overflow-hidden transition-all duration-500 shadow-xl bg-white backdrop-blur-sm max-w-72 rounded-2xl border border-gray-200">
                       <div className="relative overflow-hidden rounded-t-2xl">
                         <img
                           src={mappedCourse.thumbnail.url}

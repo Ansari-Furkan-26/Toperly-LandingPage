@@ -156,13 +156,22 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white text-gray-900 shadow-md transition-all duration-300 ${isScrolled ? 'h-16' : 'h-16 sm:h-24'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      isScrolled 
+        ? 'bg-white text-gray-900 shadow-md' 
+        : ' text-white'
+    } ${isScrolled ? 'h-16' : 'h-16 sm:h-24'}`}>
+      
       {/* Top row - hidden when scrolled */}
-      <div className={`${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'sm:h-12 opacity-100'} transition-all duration-300 bg-gray-50 md:border-b border-gray-200`}>
+      <div className={`${isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'sm:h-12 opacity-100'} transition-all duration-300 ${
+        isScrolled ? 'bg-gray-50' : 'bg-gray-900'
+      }  ${isScrolled ? 'border-gray-200' : 'border-gray-700'}`}>
         <div className="max-w-7xl mx-auto pt-2 px-4 h-full flex items-center justify-end">
           <div className="hidden md:flex items-center space-x-6 text-sm">
             {topNavItems.map((item, index) => (
-              <a key={index} href={item.href} className="text-gray-600 cursor-default transition-colors duration-200">
+              <a key={index} href={item.href} className={`cursor-default transition-colors duration-200 ${
+                isScrolled ? 'text-gray-600 hover:text-gray-800' : 'text-gray-300 hover:text-white'
+              }`}>
                 {item.label}
               </a>
             ))}
@@ -171,7 +180,9 @@ const Navbar = () => {
       </div>
 
       {/* Main navbar */}
-      <div className={`${isScrolled ? 'h-16' : 'h-14 sm:h-16'} transition-all duration-300 bg-white`}>
+      <div className={`${isScrolled ? 'h-16' : 'h-14 sm:h-16'} transition-all  duration-300 ${
+       isScrolled ? 'bg-backdrop-blur-xl bg-gray-50/10' : ' '
+      }`}>
         <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
           {/* Logo & Categories */}
           <div className="flex items-center">
@@ -185,7 +196,11 @@ const Navbar = () => {
               </a>
               {/* Categories Dropdown - Hidden on mobile */}
               <div className="relative group hidden lg:flex">
-                <button className="text-gray-900 font-medium hover:text-orange-500 focus:outline-none flex items-center">
+                <button className={`font-medium focus:outline-none flex items-center transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-gray-900 hover:text-orange-500' 
+                    : 'text-white hover:text-orange-400'
+                }`}>
                   Categories
                   <ChevronDown className="h-4 w-4 ml-1" />
                 </button>
@@ -209,7 +224,11 @@ const Navbar = () => {
               <a
                 key={index}
                 href={item.href}
-                className="text-sm font-medium text-gray-700 hover:text-orange-500 transition-colors duration-200"
+                className={`text-sm font-medium transition-colors duration-300 ${
+                  isScrolled
+                    ? 'text-gray-700 hover:text-orange-500'
+                    : 'text-gray-300 hover:text-orange-400'
+                }`}
               >
                 {item.label}
               </a>
@@ -225,13 +244,20 @@ const Navbar = () => {
                 placeholder="Search for anything"
                 value={query}
                 onChange={handleSearch}
-                className="w-64 px-4 py-2 bg-gray-100 text-gray-900 placeholder-gray-500 rounded-md border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent"
+                className={`w-64 px-4 py-2 rounded-md border focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all duration-300 ${
+                  isScrolled
+                    ? 'bg-gray-100 text-gray-900 placeholder-gray-500 border-gray-200'
+                    : 'bg-gray-800 text-white placeholder-gray-400 border-gray-600'
+                }`}
               />
               <button className="absolute right-3 top-2.5">
-                <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 transition-colors duration-300 ${
+                  isScrolled ? 'text-gray-500' : 'text-gray-400'
+                }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
+              
               {/* Search Dropdown */}
               {filtered.length > 0 && (
                 <ul className="absolute top-full left-0 mt-1 w-[300px] bg-white border rounded shadow z-50 max-h-60 overflow-y-auto">
@@ -245,7 +271,7 @@ const Navbar = () => {
                         setFiltered([]);
                       }}
                     >
-                      <div className="font-medium">{course.title}</div>
+                      <div className="font-medium text-gray-900">{course.title}</div>
                       <div className="text-gray-500 text-xs line-clamp-1" dangerouslySetInnerHTML={{ __html: course.description }} />
                       <div className="text-green-600 font-semibold text-sm">₹{course.price}</div>
                     </li>
@@ -254,23 +280,26 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Mobile menu button with AI-inspired glow */}
+            {/* Mobile menu button with dynamic colors */}
             <button
-              className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-all relative"
+              className={`lg:hidden p-2 rounded-md transition-all relative ${
+                isScrolled
+                  ? 'text-gray-700 hover:bg-gray-100'
+                  : 'text-gray-300 hover:bg-gray-800'
+              }`}
               onClick={toggleMobileMenu}
               aria-label="Menu"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
               ) : (
-                <>
-                  <Menu className="w-6 h-6" />
-                </>
+                <Menu className="w-6 h-6" />
               )}
             </button>
           </div>
         </div>
 
+        {/* Mobile Menu - Keep as white background */}
         {isMobileMenuOpen && (
           <>
             {/* Overlay with animated gradient */}
@@ -295,8 +324,6 @@ const Navbar = () => {
                 '--menu-scale': '1'
               }}
             >
-             
-
               {/* Close Button with hover effect */}
               <button
                 onClick={closeMobileMenu}
@@ -384,45 +411,44 @@ const Navbar = () => {
                 </nav>
 
                 {/* Categories with AI-inspired accordion */}
-              <div className=" z-20">
-  {/* Toggle Button */}
-  <button
-    className="flex items-center justify-between w-full font-medium text-gray-900 focus:outline-none rounded-xl bg-blue-50/50 px-4 py-3 hover:bg-blue-100 transition-colors group"
-    onClick={() => setIsCategoriesOpen((prev) => !prev)}
-  >
-    <div className="flex items-center">
-      <div className="w-8 h-8 flex items-center justify-center mr-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
-        <Folder className="text-blue-600" size={18} />
-      </div>
-      <span className="text-lg font-medium animate-fadeUp">Categories</span>
-    </div>
-    <ChevronDown
-      className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isCategoriesOpen ? 'rotate-180' : ''}`}
-    />
-  </button>
+                <div className="z-20">
+                  {/* Toggle Button */}
+                  <button
+                    className="flex items-center justify-between w-full font-medium text-gray-900 focus:outline-none rounded-xl bg-blue-50/50 px-4 py-3 hover:bg-blue-100 transition-colors group"
+                    onClick={() => setIsCategoriesOpen((prev) => !prev)}
+                  >
+                    <div className="flex items-center">
+                      <div className="w-8 h-8 flex items-center justify-center mr-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                        <Folder className="text-blue-600" size={18} />
+                      </div>
+                      <span className="text-lg font-medium animate-fadeUp">Categories</span>
+                    </div>
+                    <ChevronDown
+                      className={`h-5 w-5 text-gray-500 transition-transform duration-200 ${isCategoriesOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
 
-  {/* Category List */}
-  <div
-    className={`transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-[500px] mt-2' : 'max-h-0'}`}
-  >
-    <div className="pl-2">
-      {categories.map((cat, index) => (
-        <a
-          key={cat}
-          href="#"
-          className="flex items-center py-2 px-4 text-base text-gray-600 hover:text-blue-600 cursor-pointer transition-colors group"
-          onClick={closeMobileMenu}
-        >
-          <span className="w-2 h-2 mr-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-          <span className="group-hover:translate-x-1 transition-transform animate-fadeUp">
-            {cat}
-          </span>
-        </a>
-      ))}
-    </div>
-  </div>
-</div>
-
+                  {/* Category List */}
+                  <div
+                    className={`transition-all duration-300 overflow-hidden ${isCategoriesOpen ? 'max-h-[500px] mt-2' : 'max-h-0'}`}
+                  >
+                    <div className="pl-2">
+                      {categories.map((cat, index) => (
+                        <a
+                          key={cat}
+                          href="#"
+                          className="flex items-center py-2 px-4 text-base text-gray-600 hover:text-blue-600 cursor-pointer transition-colors group"
+                          onClick={closeMobileMenu}
+                        >
+                          <span className="w-2 h-2 mr-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                          <span className="group-hover:translate-x-1 transition-transform animate-fadeUp">
+                            {cat}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
               
               {/* Animated AI wave at bottom */}
@@ -448,7 +474,7 @@ const Navbar = () => {
               .animate-aiMenuIn { animation: aiMenuIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
               .animate-floatIn { animation: floatIn 0.2s ease-out forwards; }
 
-               @keyframes fadeUp {
+              @keyframes fadeUp {
                 0% {
                   opacity: 0;
                   transform: translateY(10px);

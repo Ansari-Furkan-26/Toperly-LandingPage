@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Brain, Zap, TrendingUp, ArrowRight, Shield, Cpu, Database, Users, Atom, Network, Eye, Sparkles } from 'lucide-react';
 
@@ -14,11 +15,11 @@ const DarkAIHero = () => {
     const sequence = [
       { delay: 0, action: () => setLoadingStage('bg') },
       { delay: 500, action: () => setLoadingStage('content') },
-      { delay: 600, action: () => setShowTitle(true) },        // Title first
-      { delay: 1200, action: () => setShowSubtitle(true) },    // Subtitle after title
-      { delay: 1600, action: () => setShowButton(true) },      // Button from right
-      { delay: 2000, action: () => setShowStats(true) },       // Stats fade up last
-      { delay: 600, action: () => setAnimateChip(true) },      // Chip animation starts early
+      { delay: 600, action: () => setShowTitle(true) },
+      { delay: 1200, action: () => setShowSubtitle(true) },
+      { delay: 1600, action: () => setShowButton(true) },
+      { delay: 2000, action: () => setShowStats(true) },
+      { delay: 600, action: () => setAnimateChip(true) },
       { delay: 800, action: () => setLoadingStage('complete') }
     ];
 
@@ -32,9 +33,9 @@ const DarkAIHero = () => {
   const getBackgroundStyle = () => {
     return {
       background: `
-        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(29, 78, 216, 0.1) 0%, transparent 50%),
         linear-gradient(135deg, #000000 0%, #0f172a 100%)
       `,
     };
@@ -57,8 +58,8 @@ const DarkAIHero = () => {
           }`}
           style={{
             backgroundImage: `
-              linear-gradient(rgba(34, 211, 238, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(34, 211, 238, 0.3) 1px, transparent 1px)
+              linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
             `,
             backgroundSize: '50px 50px',
             animation: loadingStage !== 'bg' ? 'gridSlide 2s ease-out' : 'none'
@@ -68,8 +69,8 @@ const DarkAIHero = () => {
         {/* Flowing Light Beams */}
         {loadingStage !== 'bg' && (
           <div className="absolute inset-0">
-            <div className="absolute top-20 left-10 w-96 h-1 bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent animate-beam-flow"></div>
-            <div className="absolute bottom-32 right-20 w-80 h-1 bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent animate-beam-flow-reverse"></div>
+            <div className="absolute top-20 left-10 w-96 h-1 bg-gradient-to-r from-transparent via-blue-500/30 to-transparent animate-beam-flow"></div>
+            <div className="absolute bottom-32 right-20 w-80 h-1 bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-beam-flow-reverse"></div>
           </div>
         )}
       </div>
@@ -84,20 +85,21 @@ const DarkAIHero = () => {
             <div 
               className={`inline-flex items-center px-6 py-3 backdrop-blur-sm rounded-full text-sm font-semibold mb-8 border shadow-2xl transition-all duration-800 ${
                 showTitle ? 'animate-badge-slide' : 'opacity-0 transform translate-x-[-100px]'
-              } bg-emerald-500/20 text-emerald-400 border-emerald-500/30`}
+              } bg-blue-500/20 text-blue-400 border-blue-500/30`}
             >
-              <Shield className="w-4 h-4 mr-2 animate-spin-slow text-emerald-400" />
+              <Shield className="w-4 h-4 mr-2 animate-spin-slow text-blue-400" />
               Verify to Trust AI Platform
-              <div className="w-2 h-2 rounded-full ml-2 animate-pulse-infinite bg-emerald-400"></div>
+              <div className="w-2 h-2 rounded-full ml-2 animate-pulse-infinite bg-blue-400"></div>
             </div>
             
             {/* Main Title with Full Gradient Animation */}
             <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.9] mb-8 tracking-tight transition-all duration-1000 ${
               showTitle ? 'animate-title-gradient-reveal' : 'opacity-0 transform translate-y-8'
             }`}>
-              <span className="gradient-animated-text">
-                Making India Ready for the Future with AI
-              </span>
+              <span className="bg-gradient-to-b from-black via-gray-300 to-white text-transparent bg-clip-text">
+  Making India Ready for the Future with AI
+</span>
+
             </h1>
             
             {/* Subtitle - Animated from Right */}
@@ -106,7 +108,7 @@ const DarkAIHero = () => {
                 showSubtitle ? 'animate-subtitle-slide' : 'opacity-0 transform translate-x-[100px]'
               }`}
             >
-              Join <span className="font-semibold text-emerald-400 animate-text-glow">50,000+</span> professionals mastering 
+              Join <span className="font-semibold text-blue-400 animate-text-glow">50,000+</span> professionals mastering 
               cutting-edge AI skills through our immersive, verifiable learning platform.
             </p>
 
@@ -116,8 +118,8 @@ const DarkAIHero = () => {
                 showButton ? 'animate-button-slide' : 'opacity-0 transform translate-x-[100px]'
               }`}
             >
-              <button className="group relative px-8 py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r from-emerald-500 to-cyan-500 text-black shadow-emerald-500/25 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 animate-button-pulse">
-                <Zap className="w-5 h-5 mr-3 inline group-hover:animate-bounce " />
+              <button className="group relative px-8 py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r from-blue-500 to-blue-400 text-white shadow-blue-500/25 shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 animate-button-pulse">
+                <Zap className="w-5 h-5 mr-3 inline group-hover:animate-bounce" />
                 Schedule Demo
                 <ArrowRight className="w-5 h-5 ml-3 inline group-hover:translate-x-1 transition-transform animate-arrow-bounce" />
                 <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -139,17 +141,17 @@ const DarkAIHero = () => {
                   style={{ transitionDelay: stat.delay }}
                 >
                   <div className="flex items-center justify-center lg:justify-start mb-2">
-                    <div className="text-3xl sm:text-4xl font-black mr-2 text-emerald-400">
+                    <div className="text-3xl sm:text-4xl font-black mr-2 text-blue-400">
                       {stat.value}
                     </div>
-                    <stat.icon className="w-6 h-6 group-hover:animate-bounce text-emerald-400" />
+                    <stat.icon className="w-6 h-6 group-hover:animate-bounce text-blue-400" />
                   </div>
                   <div className="text-sm font-medium text-gray-400">
                     {stat.label}
                   </div>
-                  <div className="w-full h-1 rounded-full mt-2 bg-emerald-200/20">
+                  <div className="w-full h-1 rounded-full mt-2 bg-blue-200/20">
                     <div 
-                      className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 animate-progress" 
+                      className="h-full rounded-full bg-gradient-to-r from-blue-400 to-blue-300 animate-progress" 
                       style={{ 
                         width: stat.value === '98%' ? '92%' : '100%'
                       }}
@@ -160,7 +162,7 @@ const DarkAIHero = () => {
             </div>
           </div>
 
-          {/* Right Column - AI Chip (unchanged, as requested) */}
+          {/* Right Column - AI Chip */}
           <div 
             className={`relative transition-all duration-1000 ${
               loadingStage !== 'bg' 
@@ -171,7 +173,7 @@ const DarkAIHero = () => {
             <div className="relative group">
               
               {/* Main AI Chip Container */}
-              <div className="relative mx-auto w-80 h-80 rounded-3xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 shadow-emerald-500/25 shadow-2xl backdrop-blur-sm border border-white/10 overflow-hidden animate-container-glow">
+              <div className="relative mx-auto w-80 h-80 rounded-3xl bg-gradient-to-br from-blue-500/20 to-blue-400/20 shadow-blue-500/25 shadow-2xl backdrop-blur-sm border border-white/10 overflow-hidden animate-container-glow">
                 
                 {/* Circuit Board Background Pattern */}
                 <div className="absolute inset-0 opacity-20">
@@ -180,21 +182,21 @@ const DarkAIHero = () => {
                     {animateChip && (
                       <>
                         {/* Horizontal Lines */}
-                        <path d="M0 80 L320 80" stroke="#10b981" strokeWidth="1" className="animate-circuit-draw" />
-                        <path d="M0 160 L320 160" stroke="#22d3ee" strokeWidth="1" className="animate-circuit-draw" />
-                        <path d="M0 240 L320 240" stroke="#10b981" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M0 80 L320 80" stroke="#1e3a8a" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M0 160 L320 160" stroke="#3b82f6" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M0 240 L320 240" stroke="#1e3a8a" strokeWidth="1" className="animate-circuit-draw" />
                         
                         {/* Vertical Lines */}
-                        <path d="M80 0 L80 320" stroke="#22d3ee" strokeWidth="1" className="animate-circuit-draw" />
-                        <path d="M160 0 L160 320" stroke="#10b981" strokeWidth="1" className="animate-circuit-draw" />
-                        <path d="M240 0 L240 320" stroke="#22d3ee" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M80 0 L80 320" stroke="#3b82f6" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M160 0 L160 320" stroke="#1e3a8a" strokeWidth="1" className="animate-circuit-draw" />
+                        <path d="M240 0 L240 320" stroke="#3b82f6" strokeWidth="1" className="animate-circuit-draw" />
                         
                         {/* Connection Points */}
-                        <circle cx="80" cy="80" r="3" fill="#10b981" className="animate-pulse-point-infinite" />
-                        <circle cx="160" cy="160" r="4" fill="#22d3ee" className="animate-pulse-point-infinite" />
-                        <circle cx="240" cy="240" r="3" fill="#10b981" className="animate-pulse-point-infinite" />
-                        <circle cx="240" cy="80" r="3" fill="#22d3ee" className="animate-pulse-point-infinite" />
-                        <circle cx="80" cy="240" r="3" fill="#10b981" className="animate-pulse-point-infinite" />
+                        <circle cx="80" cy="80" r="3" fill="#1e3a8a" className="animate-pulse-point-infinite" />
+                        <circle cx="160" cy="160" r="4" fill="#3b82f6" className="animate-pulse-point-infinite" />
+                        <circle cx="240" cy="240" r="3" fill="#1e3a8a" className="animate-pulse-point-infinite" />
+                        <circle cx="240" cy="80" r="3" fill="#3b82f6" className="animate-pulse-point-infinite" />
+                        <circle cx="80" cy="240" r="3" fill="#1e3a8a" className="animate-pulse-point-infinite" />
                       </>
                     )}
                   </svg>
@@ -202,7 +204,7 @@ const DarkAIHero = () => {
 
                 {/* Central AI Brain */}
                 <div className="absolute inset-8 flex items-center justify-center">
-                  <div className={`relative text-emerald-400 transition-all duration-1000 ${
+                  <div className={`relative text-blue-400 transition-all duration-1000 ${
                     animateChip ? 'animate-brain-activate' : 'opacity-60'
                   }`}>
                     <Brain className="w-32 h-32 animate-brain-pulse" />
@@ -213,7 +215,7 @@ const DarkAIHero = () => {
                         {[...Array(8)].map((_, i) => (
                           <div
                             key={i}
-                            className="absolute w-px h-12 bg-gradient-to-t from-emerald-400/80 to-transparent animate-neural-pulse-infinite"
+                            className="absolute w-px h-12 bg-gradient-to-t from-blue-400/80 to-transparent animate-neural-pulse-infinite"
                             style={{
                               left: '50%',
                               top: '50%',
@@ -230,20 +232,20 @@ const DarkAIHero = () => {
 
                 {/* Corner Chips with Circuit Animation */}
                 {[
-                  { icon: Shield, position: 'top-4 left-4', color: 'emerald' },
-                  { icon: Database, position: 'top-4 right-4', color: 'cyan' },
-                  { icon: Network, position: 'bottom-4 left-4', color: 'emerald' },
-                  { icon: Eye, position: 'bottom-4 right-4', color: 'cyan' }
+                  { icon: Shield, position: 'top-4 left-4', color: 'blue' },
+                  { icon: Database, position: 'top-4 right-4', color: 'blue-light' },
+                  { icon: Network, position: 'bottom-4 left-4', color: 'blue' },
+                  { icon: Eye, position: 'bottom-4 right-4', color: 'blue-light' }
                 ].map((item, index) => (
                   <div
                     key={index}
                     className={`absolute ${item.position} p-3 rounded-xl backdrop-blur-lg bg-black/20 border shadow-lg transition-all duration-1000 ${
-                      animateChip ? 'animate-chip-activate border-emerald-500/30 shadow-emerald-500/20' : 'border-gray-500/20'
+                      animateChip ? 'animate-chip-activate border-blue-500/30 shadow-blue-500/20' : 'border-gray-500/20'
                     }`}
                   >
                     <item.icon className={`w-6 h-6 ${
-                      item.color === 'emerald' ? 'text-emerald-400' : 'text-cyan-400'
-                    } `} />
+                      item.color === 'blue' ? 'text-blue-400' : 'text-blue-300'
+                    }`} />
                   </div>
                 ))}
 
@@ -251,7 +253,7 @@ const DarkAIHero = () => {
                 {animateChip && [...Array(6)].map((_, i) => (
                   <div
                     key={i}
-                    className="absolute w-2 h-2 rounded-full bg-emerald-400 animate-data-flow-infinite"
+                    className="absolute w-2 h-2 rounded-full bg-blue-400 animate-data-flow-infinite"
                     style={{
                       animationDelay: `${i * 0.8}s`,
                       left: '50%',
@@ -262,13 +264,13 @@ const DarkAIHero = () => {
               </div>
 
               {/* Enhanced Floating Info Cards */}
-              <div className={`absolute -top-6 -right-6 p-4 rounded-2xl backdrop-blur-lg bg-black/40 border border-emerald-500/20 shadow-emerald-500/20 shadow-lg transition-all duration-1000 ${
+              <div className={`absolute -top-6 -right-6 p-4 rounded-2xl backdrop-blur-lg bg-black/40 border border-blue-500/20 shadow-blue-500/20 shadow-lg transition-all duration-1000 ${
                 animateChip ? 'animate-info-card-reveal' : 'opacity-0 scale-75'
               }`}>
                 <div className="flex items-center space-x-2">
-                  <Sparkles className="w-6 h-6  text-emerald-400" />
+                  <Sparkles className="w-6 h-6 text-blue-400" />
                   <div>
-                    <div className="text-xs font-semibold text-emerald-400">
+                    <div className="text-xs font-semibold text-blue-400">
                       Neural Processing
                     </div>
                     <div className="text-xs text-gray-400">
@@ -278,13 +280,13 @@ const DarkAIHero = () => {
                 </div>
               </div>
               
-              <div className={`absolute bottom-6 -left-6 p-4 rounded-2xl backdrop-blur-lg bg-black/40 border border-emerald-500/20 shadow-emerald-500/20 shadow-lg transition-all duration-1000 ${
+              <div className={`absolute bottom-6 -left-6 p-4 rounded-2xl backdrop-blur-lg bg-black/40 border border-blue-500/20 shadow-blue-500/20 shadow-lg transition-all duration-1000 ${
                 animateChip ? 'animate-info-card-reveal' : 'opacity-0 scale-75'
               }`}>
                 <div className="flex items-center space-x-2">
-                  <Database className="w-6 h-6 animate-database-pulse text-emerald-400" />
+                  <Database className="w-6 h-6 animate-database-pulse text-blue-400" />
                   <div>
-                    <div className="text-xs font-semibold text-emerald-400">
+                    <div className="text-xs font-semibold text-blue-400">
                       Trusted AI Base
                     </div>
                     <div className="text-xs text-gray-400">
@@ -364,9 +366,9 @@ const DarkAIHero = () => {
         .gradient-animated-text {
           background: linear-gradient(
             90deg, 
-            #10b981 0%, 
-            #06b6d4 50%, 
-            #10b981 100%
+            #1e3a8a 0%, 
+            #3b82f6 50%, 
+            #1e3a8a 100%
           );
           background-size: 300% auto;
           -webkit-background-clip: text;
@@ -387,18 +389,13 @@ const DarkAIHero = () => {
         }
         
         @keyframes text-glow {
-          0%, 100% { text-shadow: 0 0 5px #10b981; }
-          50% { text-shadow: 0 0 20px #10b981, 0 0 30px #10b981; }
+          0%, 100% { text-shadow: 0 0 5px #3b82f6; }
+          50% { text-shadow: 0 0 20px #3b82f6, 0 0 30px #3b82f6; }
         }
         
         @keyframes button-pulse {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.02); }
-        }
-        
-        @keyframes icon-rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
         }
         
         @keyframes arrow-bounce {
@@ -407,8 +404,8 @@ const DarkAIHero = () => {
         }
         
         @keyframes number-pulse {
-          0%, 100% { transform: scale(1); color: #10b981; }
-          50% { transform: scale(1.1); color: #22d3ee; }
+          0%, 100% { transform: scale(1); color: #3b82f6; }
+          50% { transform: scale(1.1); color: #1e40af; }
         }
         
         @keyframes icon-float {
@@ -423,8 +420,8 @@ const DarkAIHero = () => {
         }
         
         @keyframes container-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.5), 0 0 60px rgba(34, 211, 238, 0.3); }
+          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.5), 0 0 60px rgba(29, 78, 216, 0.3); }
         }
         
         @keyframes brain-pulse {
@@ -443,11 +440,6 @@ const DarkAIHero = () => {
           50% { opacity: 1; transform: scale(1.3); }
         }
         
-        @keyframes icon-spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
         @keyframes data-flow-infinite {
           0% { 
             transform: translate(-50%, -50%) rotate(0deg) translateX(0px); 
@@ -459,12 +451,6 @@ const DarkAIHero = () => {
             transform: translate(-50%, -50%) rotate(360deg) translateX(120px); 
             opacity: 0; 
           }
-        }
-        
-        @keyframes sparkle-rotate {
-          0% { transform: rotate(0deg) scale(1); }
-          50% { transform: rotate(180deg) scale(1.2); }
-          100% { transform: rotate(360deg) scale(1); }
         }
         
         @keyframes database-pulse {
@@ -499,23 +485,20 @@ const DarkAIHero = () => {
         .animate-beam-flow { animation: beam-flow 3s ease-in-out infinite; }
         .animate-beam-flow-reverse { animation: beam-flow-reverse 3s ease-in-out infinite 1.5s; }
         
-        /* New Sequenced Animation Classes */
         .animate-badge-slide { animation: badge-slide 0.8s ease-out forwards; }
         .animate-title-gradient-reveal { animation: title-gradient-reveal 0.8s ease-out forwards; }
         .animate-subtitle-slide { animation: subtitle-slide 0.8s ease-out forwards; }
         .animate-button-slide { animation: button-slide 0.8s ease-out forwards; }
         .animate-stats-fade-up { animation: stats-fade-up 0.8s ease-out forwards; }
         
-        /* Infinite Animation Classes */
         .animate-pulse-infinite { animation: pulse-infinite 2s ease-in-out infinite; }
         .animate-spin-slow { animation: spin-slow 8s linear infinite; }
         .animate-text-glow { animation: text-glow 2s ease-in-out infinite; }
         .animate-button-pulse { animation: button-pulse 3s ease-in-out infinite; }
-        .animate-icon-rotate { animation: icon-rotate 3s linear infinite; }
         .animate-arrow-bounce { animation: arrow-bounce 2s ease-in-out infinite; }
         .animate-number-pulse { animation: number-pulse 2s ease-in-out infinite; }
         .animate-icon-float { animation: icon-float 3s ease-in-out infinite; }
-        .animate-progress-infinite { 
+        .animate-progress { 
           animation: progress-infinite 3s ease-in-out infinite;
           transform-origin: left;
         }
@@ -523,12 +506,9 @@ const DarkAIHero = () => {
         .animate-brain-pulse { animation: brain-pulse 2s ease-in-out infinite; }
         .animate-neural-pulse-infinite { animation: neural-pulse-infinite 3s ease-in-out infinite; }
         .animate-pulse-point-infinite { animation: pulse-point-infinite 2s ease-in-out infinite; }
-        .animate-icon-spin { animation: icon-spin 4s linear infinite; }
         .animate-data-flow-infinite { animation: data-flow-infinite 4s linear infinite; }
-        .animate-sparkle-rotate { animation: sparkle-rotate 3s ease-in-out infinite; }
         .animate-database-pulse { animation: database-pulse 2s ease-in-out infinite; }
         
-        /* Static Animation Classes */
         .animate-circuit-draw { 
           stroke-dasharray: 0 1000;
           animation: circuit-draw 2s ease-out forwards; 
