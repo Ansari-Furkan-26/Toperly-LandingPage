@@ -12,12 +12,13 @@ import {
   Download, 
   CheckCircle,
   Globe,
-  Calendar,
+  Calendar,Play ,
   Trophy,
   Zap,
   User,
   Loader
 } from 'lucide-react';
+import { isToday } from 'date-fns';
 
 interface Course {
   _id: string;
@@ -31,7 +32,7 @@ interface Course {
   isPublished: string;
   rating: number;
   totalReviews: number;
-  createdAt: string;
+  createdAt: string ;
   updatedAt: string;
   customId: string;
   thumbnail: { filename?: string; url?: string };
@@ -148,33 +149,39 @@ const CourseDetail: React.FC = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Hero Section */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="relative">
-                <img
-                  src={course.thumbnail?.url}
-                  alt={course.title}
-                  className="w-full h-64 md:h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium border capitalize flex items-center ${getLevelColor(course.level)}`}>
-                      {getLevelIcon(course.level)}
-                      <span className="ml-1">{course.level}</span>
-                    </span>
-                    {course.isPublished === 'approved' && (
-                      <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
-                        <CheckCircle className="w-4 h-4 mr-1" />
-                        Published
-                      </span>
-                    )}
-                  </div>
-                  <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
-                    {course.title}
-                  </h1>
-                </div>
-              </div>
-            </div>
+           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+  <div className="relative">
+    <img
+      src={course.thumbnail?.url}
+      alt={course.title}
+      className="w-full h-64 md:h-80 object-cover"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+    <button 
+      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-900 rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 group"
+      aria-label="Play course preview"
+    >
+      <Play className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
+    </button>
+    <div className="absolute bottom-6 left-6 right-6">
+      <div className="flex items-center space-x-3 mb-4">
+        <span className={`px-3 py-1 rounded-full text-sm font-medium border capitalize flex items-center ${getLevelColor(course.level)}`}>
+          {getLevelIcon(course.level)}
+          <span className="ml-1">{course.level}</span>
+        </span>
+        {course.isPublished === 'approved' && (
+          <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center">
+            <CheckCircle className="w-4 h-4 mr-1" />
+            Published
+          </span>
+        )}
+      </div>
+      <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+        {course.title}
+      </h1>
+    </div>
+  </div>
+</div>
 
             {/* Course Info */}
             <div className="bg-white rounded-2xl shadow-lg p-8">
@@ -263,12 +270,12 @@ const CourseDetail: React.FC = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                  {/* <div className="flex items-center justify-between py-3 border-b border-gray-100">
                     <span className="font-medium text-gray-600">Course ID</span>
                     <span className="text-gray-900 font-mono text-sm bg-gray-100 px-2 py-1 rounded">
                       {course.customId}
                     </span>
-                  </div>
+                  </div> */}
                   
                   <div className="flex items-center justify-between py-3 border-b border-gray-100">
                     <span className="font-medium text-gray-600">Category</span>
@@ -292,13 +299,13 @@ const CourseDetail: React.FC = () => {
                     </span>
                   </div>
                   
-                  <div className="flex items-center justify-between py-3 border-b border-gray-100">
+                  {/* <div className="flex items-center justify-between py-3 border-b border-gray-100">
                     <span className="font-medium text-gray-600">Last Updated</span>
                     <span className="text-gray-900 flex items-center">
                       <Zap className="w-4 h-4 mr-1" />
                       {new Date(course.updatedAt).toLocaleDateString()}
                     </span>
-                  </div>
+                  </div> */}
                   
                   <div className="flex items-center justify-between py-3 border-b border-gray-100">
                     <span className="font-medium text-gray-600">Language</span>

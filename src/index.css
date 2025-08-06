@@ -19,6 +19,10 @@ All colors MUST be HSL.
   }
 }
 
+/* Hide scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  display: none;
+}
 
 @layer base {
   :root {

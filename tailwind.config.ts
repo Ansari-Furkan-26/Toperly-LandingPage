@@ -18,7 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			
 			colors: {
+				'glow-blue': '#38bdf8',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -70,7 +72,8 @@ export default {
 				'gradient-secondary': 'var(--gradient-secondary)',
 				'gradient-accent': 'var(--gradient-accent)',
 				'gradient-neural': 'var(--gradient-neural)',
-				'gradient-ai-flow': 'var(--gradient-ai-flow)'
+				'gradient-ai-flow': 'var(--gradient-ai-flow)',
+				'glow-blue': '0 0 80px 40px rgba(56, 189, 248, 0.1)',
 			},
 			boxShadow: {
 				'glow-primary': 'var(--glow-primary)',

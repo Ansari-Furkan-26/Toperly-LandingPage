@@ -285,16 +285,7 @@ const ProfessionalCourseSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-2">Ready to advance your career?</h3>
-            <p className="text-blue-100 mb-6">Join over 500,000 students learning with our expert instructors</p>
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Browse All Courses
-            </button>
-          </div>
-        </div>
+       
       </div>
     </section>
   );

@@ -28,7 +28,7 @@ const App = () => (
           <Route path="/courses" element={<AllCourses />} />          
           <Route path="/courses/:id" element={<CourseDetail />} />
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/conatct-us" element={<Contact />} />
+          <Route path="/contact-us" element={<Contact />} />
           
           {/* Fallback Route */}  
           <Route path="*" element={<NotFound />} />

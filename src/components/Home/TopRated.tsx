@@ -400,7 +400,7 @@ const CoursesSection = () => {
                 AI Revolution?
               </span>
             </h3>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-sm md:text-lg text-gray-600 mb-8">
               New courses added monthly. Join our community of AI professionals and accelerate your career with cutting-edge skills.
             </p>
 

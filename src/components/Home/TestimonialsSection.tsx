@@ -14,33 +14,6 @@ const TestimonialsSection = () => {
       achievement: "200% salary increase"
     },
     {
-      name: "Marcus Rodriguez",
-      role: "AI Product Manager at Microsoft",
-      company: "Microsoft", 
-      content: "The business-focused AI course gave me strategic insights that transformed how I lead AI initiatives. Now I'm driving company-wide AI adoption with confidence.",
-      rating: 5,
-      initials: "MR",
-      achievement: "Led $50M AI project"
-    },
-    {
-      name: "Emily Johnson",
-      role: "ML Engineer at Tesla",
-      company: "Tesla",
-      content: "The deep learning course was phenomenal. The hands-on approach with real neural networks prepared me for the cutting-edge work I do daily in autonomous vehicles.",
-      rating: 5,
-      initials: "EJ",
-      achievement: "Published 3 AI papers"
-    },
-    {
-      name: "David Kim",
-      role: "AI Researcher at OpenAI",
-      company: "OpenAI",
-      content: "Toperly doesn't just teach theory—they show you how to build production-ready AI systems. The project-based learning methodology is absolutely unmatched in the industry.",
-      rating: 5,
-      initials: "DK",
-      achievement: "Founded AI startup"
-    },
-    {
       name: "Lisa Wang",
       role: "Chief Technology Officer",
       company: "Fortune 500",
@@ -70,7 +43,7 @@ const TestimonialsSection = () => {
               Industry Leaders
             </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+          <p className="text-sm md:text-xl text-muted-foreground max-w-4xl mx-auto">
             Join thousands of AI professionals at top companies who've transformed their careers 
             with our revolutionary learning platform.
           </p>

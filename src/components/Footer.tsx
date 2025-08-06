@@ -43,6 +43,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-secondary border-t border-border">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+         
         {/* Newsletter Section */}
         <div className="py-12 border-b border-border">
           <div className="text-center max-w-2xl mx-auto">
@@ -68,7 +69,9 @@ const Footer = () => {
           </div>
         </div>
 
+
         {/* Responsive grid/footer main */}
+        
         <div
           className="
             py-12
@@ -78,9 +81,12 @@ const Footer = () => {
             lg:grid-cols-6
             grid-cols-1
           "
-        >
+        > 
+        
+        
           {/* Brand & contact: mobile - flex row; md+ - block */}
           <div className="lg:col-span-2 flex flex-col md:flex-row md:space-x-6 lg:flex-col lg:space-x-0">
+            
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center mb-4 md:mb-0">
               <img src="/logo.png" alt="" className="w-40" />

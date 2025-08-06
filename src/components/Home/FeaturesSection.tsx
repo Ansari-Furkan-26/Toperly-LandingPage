@@ -18,22 +18,22 @@ const VirtualDeviceBrowser = () => {
     openwork: {
       title: 'Assessments Dashboard',
       img: 'https://i.pinimg.com/736x/f8/71/d0/f871d07ba296050b21bb1355c4582597.jpg',
-      desc: 'Learning is most effective when tested immediately. Our courses integrate on-the-spot assessments after every lesson, ensuring students reinforce what they learn in real time. These include quizzes, coding challenges, and scenario-based questions crafted to enhance memory retention. Instead of passive learning, students engage in an active recall process, which builds deeper understanding and long-term skill mastery. It s not just about finishing a video—it’s about proving you’ve absorbed it, right then and there.',
+      desc: 'Learning is most effective when tested immediately. Our courses integrate on-the-spot assessments after every lesson, ensuring students reinforce what they learn in real time. These include quizzes, coding challenges, and scenario-based questions crafted to enhance memory retention.',
     },
     interactions: {
       title: 'Certified Courses',
       img: 'https://i.pinimg.com/736x/81/a2/98/81a2988606015871143db36f9872f905.jpg',
-      desc: 'Knowledge is powerful—but proof of knowledge is priceless. Upon successful completion of our courses, learners receive industry-verified certificates that showcase their skills and dedication.These certificates aren’t just decorative—they’re designed to hold value on platforms like LinkedIn, resumes, or direct job applications, helping students stand out in a competitive job market with a credible credential..',
+      desc: 'Knowledge is powerful—but proof of knowledge is priceless. Upon successful completion of our courses, learners receive industry-verified certificates that showcase their skills and dedication.',
     },
     analytics: {
       title: 'AI-Powered Insights',
       img: 'https://i.pinimg.com/736x/b7/ee/06/b7ee068397409d41f97779f3d75581f0.jpg',
-      desc: 'We don’t just teach AI—we live and breathe it. Our curriculum is hyper-focused on Artificial Intelligence and related technologies, offering deep dives into machine learning, NLP, computer vision, and generative AI.Rather than spreading thin across tech topics, we double down on AI to make sure learners become specialists. If you are looking to become an AI leader—not just a tech generalist—this is the place.',
+      desc: 'We don’t just teach AI—we live and breathe it. Our curriculum is hyper-focused on Artificial Intelligence and related technologies, offering deep dives into machine learning, NLP, computer vision, and generative AI.Rather than spreading thin across tech topics, we double down on AI to make sure learners become specialists.',
     },
     resources: {
       title: 'Career-Ready Skills',
       img: 'https://i.pinimg.com/1200x/2d/f3/f6/2df3f6e14b0c1e8dc690627a44c68a0c.jpg',
-      desc: 'Technical knowledge alone doesn’t land jobs—career-ready skills do. Our programs go beyond code, incorporating real-world problem-solving, communication, and collaborative projects that reflect workplace scenarios.By the end of the course, students don’t just have knowledge—they have confidence, projects, and skills employers actually seek, preparing them to thrive in interviews, internships, or full-time roles.',
+      desc: 'Technical knowledge alone doesn’t land jobs—career-ready skills do. Our programs go beyond code, incorporating real-world problem-solving, communication, and collaborative projects that reflect workplace scenarios.',
     },
   };
 
@@ -133,7 +133,7 @@ const VirtualDeviceBrowser = () => {
       className={`
         flex items-center justify-center rounded-t-xl transition-all duration-300 whitespace-nowrap
         ${activeTab === tab.id
-          ? 'bg-white mx-1 transform scale-105 border border-gray-100 px-4 py-2 space-x-2'
+          ? 'bg-white mx-1 transform border border-gray-100 px-4 py-2 space-x-2'
           : 'bg-gray-100 hover:bg-white/100 -sm px-3 py-2 w-12'
         }
       `}
@@ -161,7 +161,7 @@ const VirtualDeviceBrowser = () => {
         className={`
           flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 text-left w-full
           ${activeTab === tab.id
-            ? 'bg-white shadow-lg transform scale-105 border border-gray-100'
+            ? 'bg-white shadow-lg transform  border-gray-100'
             : 'hover:bg-white/50 hover:shadow-md'
           }
         `}
@@ -186,7 +186,7 @@ const VirtualDeviceBrowser = () => {
               </div>
 
               {/* Main Content */}
-              <div className="flex-1 px-6 pb-4 lg:p-8">
+              <div className="flex-1 px-6  md:pb-4 lg:p-8">
                 {/* Content Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
                   <div>
@@ -211,7 +211,7 @@ const VirtualDeviceBrowser = () => {
                 {/* Content Display */}
                 <div
                   key={animationKey}
-                  className={`transition-all duration-500 ${
+                  className={`transition-all  duration-500 ${
                     isLoading ? 'opacity-0 transform translate-y-4' : 'opacity-100 transform translate-y-0'
                   }`}
                 >
@@ -221,7 +221,7 @@ const VirtualDeviceBrowser = () => {
                       alt={currentContent.title}
                       className="w-full h-64 object-cover rounded-lg mb-4 transform  transition-all duration-300"
                     />
-                    <p className="text-gray-600 text-base leading-relaxed">
+                    <p className=" text-gray-600 text-sm md:text-base leading-relaxed">
                       {currentContent.desc}
                     </p>
                   </div>
@@ -246,6 +246,87 @@ const VirtualDeviceBrowser = () => {
           to { opacity: 1; transform: translateY(0); }
         }
         .animate-fadeIn { animation: fadeIn 0.5s ease-out; }
+
+        @keyframes zoom-in {
+          0% { transform: scale(1.5); opacity: 0; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes slide-up-delayed {
+          0% { transform: translateY(30px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fade-in-up {
+          0% { transform: translateY(20px); opacity: 0; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes scale-in {
+          0% { transform: scale(0.8); opacity: 0; }
+          100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes float-network {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        @keyframes pulse-line {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+        
+        @keyframes data-flow {
+          0% { transform: translate(-50%, -50%) rotate(0deg) translateX(100px) rotate(0deg); opacity: 0; }
+          50% { opacity: 1; }
+          100% { transform: translate(-50%, -50%) rotate(360deg) translateX(100px) rotate(-360deg); opacity: 0; }
+        }
+        
+        @keyframes progress-fill {
+          0% { width: 0%; }
+          100% { width: var(--final-width, 100%); }
+        }
+        
+        @keyframes gradient-shift {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.4; }
+        }
+        
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; }
+        }
+        
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        .animate-zoom-in { animation: zoom-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .animate-slide-up-delayed { animation: slide-up-delayed 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .animate-fade-in-up { animation: fade-in-up 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .animate-scale-in { animation: scale-in 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .animate-float-network { animation: float-network linear infinite; }
+        .animate-pulse-line { animation: pulse-line 2s ease-in-out infinite; }
+        .animate-data-flow { animation: data-flow 4s linear infinite; }
+        .animate-progress-fill { animation: progress-fill 2s ease-out forwards; }
+        .animate-gradient-shift { animation: gradient-shift 3s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+        .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
       `}</style>
     </div>
   );
