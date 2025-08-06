@@ -350,7 +350,7 @@ const CourseDetail: React.FC = () => {
                   </div>
                 </div>
 
-                <a href="https://toperly-dashboard-unsquare.netlify.app/auth"><button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg">
+                <a href="https://toperly-dashboard-unsquare.netlify.app/auth/login"><button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg">
                   Enroll Now
                 </button></a>
                 
