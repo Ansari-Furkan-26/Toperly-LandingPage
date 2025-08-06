@@ -56,7 +56,7 @@ const Navbar = () => {
   const [aiParticles, setAiParticles] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/courses/')
+    axios.get('https://toperly.onrender.com/api/courses/')
       .then((res) => {
         if (res.data.success) setCourses(res.data.data);
       })

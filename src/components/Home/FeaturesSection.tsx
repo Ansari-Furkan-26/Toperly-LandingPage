@@ -221,7 +221,7 @@ const VirtualDeviceBrowser = () => {
                       alt={currentContent.title}
                       className="w-full h-64 object-cover rounded-lg mb-4 transform  transition-all duration-300"
                     />
-                    <p className=" text-gray-600 text-sm md:text-base leading-relaxed">
+                    <p className="line-clamp-4 text-gray-600 text-sm md:text-base leading-relaxed">
                       {currentContent.desc}
                     </p>
                   </div>

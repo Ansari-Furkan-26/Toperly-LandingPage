@@ -1,10 +1,10 @@
 import React from 'react'
-import AdmissionsSection from "@/components/Course/CourseSection";
+import CourseCategory from '@/components/Course/CourseCategory';
 
 function AllCourses() {
   return (
-    <div className='mt-20'>
-      <AdmissionsSection />     
+    <div className='mt-20'>  
+      <CourseCategory />
     </div>
   )
 }

@@ -40,7 +40,7 @@ const ProfessionalCourseSection: React.FC = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/courses/');
+        const response = await fetch('https://toperly.onrender.com/api/courses/');
         if (!response.ok) {
           throw new Error('Failed to fetch courses');
         }

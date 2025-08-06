@@ -17,7 +17,7 @@ const [loading, setLoading] = useState(true); // Add loading state
 useEffect(() => {
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/blogs');
+      const response = await axios.get('https://toperly.onrender.com/api/blogs');
       console.log('Raw API Response:', response.data);
       
       // Check if response.data is an array
@@ -124,10 +124,10 @@ const filteredAndSortedBlogs = useMemo(() => {
 
 
   return (
-    <div className="flex flex-col md:flex-row max-w-7xl mx-auto p-4 gap-8 mt-32">
+    <div className="flex flex-col md:flex-row max-w-7xl mx-auto p-4 gap-8 md:mt-32">
       {/* Sidebar: only show if no blog selected */}
       {!selectedBlog && (
-        <aside className="w-full md:w-72 sticky top-16 self-start">
+        <aside className="w-full md:w-72 sticky md:top-16 self-start">
           <FilterSidebar
             courses={coursesList}
             selectedCourses={selectedCourses}
