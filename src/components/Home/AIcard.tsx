@@ -67,7 +67,7 @@ const AIFeaturesSectionDark = () => {
   return (
     <div 
       ref={sectionRef}
-      className="min-h-screen relative overflow-hidden" 
+      className="min-h-full relative overflow-hidden" 
       style={getBackgroundStyle()}
     >
       {/* Grid Pattern Background */}
