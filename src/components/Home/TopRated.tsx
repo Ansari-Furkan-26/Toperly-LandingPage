@@ -184,11 +184,11 @@ const CoursesSection = () => {
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
             Transform Your Career with{' '}
             <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Expert-Led AI Courses
+              AI Courses
             </span>
           </h2>
-          <p className="text-sm md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Choose from our comprehensive collection of AI courses, designed by industry experts and enhanced with AI-powered learning technology for maximum effectiveness.
+          <p className="hidden md:block text-sm md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Explore expert-designed AI courses with smart learning.
           </p>
         </div>
 
