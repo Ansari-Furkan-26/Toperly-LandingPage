@@ -32,7 +32,7 @@ const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(0); // First FAQ open by default
 
   return (
-    <section className="bg-white py-12 sm:px-6 mx-10 min-h-full flex items-center justify-center">
+    <section className="bg-[#F9FAFB] py-12 sm:px-6 mx-10 min-h-full flex items-center justify-center">
       <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* LEFT */}
         <div className="flex flex-col justify-start h-full">

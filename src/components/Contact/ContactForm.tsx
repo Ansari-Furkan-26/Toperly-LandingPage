@@ -3,7 +3,7 @@ import { Send, CheckCircle } from 'lucide-react';
 
 const ContactForm = ({ formData, errors, isSubmitted, courses, handleInputChange, handleSubmit }) => {
   return (
-    <div className="rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 h-full">
+    <div className=" bg-[#F9FAFB] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 h-full">
       {/* Photo Section - Hidden on mobile */}
       <div className="hidden md:block md:w-1/2 self-stretch">
         <img

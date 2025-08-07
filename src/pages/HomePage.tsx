@@ -24,7 +24,7 @@ const Index = () => {
       {/* <TrustedCoursesBrand /> */}
       <MentorAccessSection />
       <TestimonialsSection />
-      <VideoPitchSection />
+      {/* <VideoPitchSection /> */}
     </div>
   );
 };

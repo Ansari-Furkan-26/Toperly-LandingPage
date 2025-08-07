@@ -1,29 +1,29 @@
 import { Button } from "@/components/ui/button";
-import {
-  Brain, Mail, Phone, MapPin, Github, Twitter, Linkedin, Youtube
-} from "lucide-react";
+import { Mail, Phone, MapPin, Twitter, Linkedin, Youtube,Instagram } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 const Footer = () => {
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  const [isInView, setIsInView] = useState(false);
   const footerLinks = {
     courses: [
-      { name: "Machine Learning", href: "#" },
-      { name: "Deep Learning", href: "#" },
-      { name: "Computer Vision", href: "#" },
-      { name: "Python Fundamental", href: "#" },
-      { name: "AI for Business", href: "#" }
+      { name: "Machine Learning", href: "/courses/category/Machine%20Learning" },
+      { name: "Artificial Intelligence", href: "/courses/category/Artificial%20Intelligence" },
+      { name: "Computer Vision", href: "/courses/category/Artificial%20Intelligence" },
+      { name: "Python Fundamental", href: "/courses/category/Python" }
     ],
     company: [
       { name: "About Us", href: "#" },
-      { name: "Our Team", href: "#" },
-      { name: "Careers", href: "#" },
-      { name: "Press", href: "#" },
-      { name: "Contact", href: "#" }
+      // { name: "Our Team", href: "#" },
+      { name: "Careers", href: "https://toperly-dashboard-unsquare.netlify.app/auth/login" },
+      // { name: "Press", href: "#" },
+      { name: "Contact", href: "/contact-us" }
     ],
     resources: [
-      { name: "Blog", href: "#" },
+      { name: "Blog", href: "/blogs" },
       { name: "Community", href: "#" },
-      { name: "Help Center", href: "#" },
-      { name: "Certificates", href: "#" }
+      // { name: "Help Center", href: "#" },
+      // { name: "Certificates", href: "#" }`
     ],
     legal: [
       { name: "Privacy Policy", href: "#" },
@@ -36,34 +36,63 @@ const Footer = () => {
   const socialLinks = [
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Github, href: "#", label: "GitHub" },
+    { icon: Instagram, href: "#", label: "https://www.instagram.com/toperly.ai/" },
     { icon: Youtube, href: "#", label: "YouTube" }
   ];
 
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       setIsInView(entry.isIntersecting);
+  //     },
+  //     {
+  //       threshold: 0.2, // Trigger when 10% of footer is visible
+  //     }
+  //   );
+
+  //   if (footerRef.current) {
+  //     observer.observe(footerRef.current);
+  //   }
+
+  //   return () => {
+  //     if (footerRef.current) {
+  //       observer.unobserve(footerRef.current);
+  //     }
+  //   };
+  // }, []);
+
   return (
-    <footer className="bg-black border-t border-gray-800">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        
+    <footer
+    // ref={footerRef}
+   className={`bg-black top-0 w-full transition-all duration-500 ${
+    isInView ? "bg-black" : "bg-[#EBF2FE]"
+  }`}
+  //    style={{
+  //   backgroundImage: 'linear-gradient(to top, black, black, black, black, black, #3B82F619)'
+  // }}  save for later undo
+  >
+      <div className="px-4  md:px-8  md:pt-10 mx-auto ">
+        <div className="bg-black max-w-5xl mx-auto rounded-t-sm ">
         {/* Centered Logo Section */}
-        <div className="py-12 ">
+        <div className="-mt-10 mr-5">
           <div className="text-center">
             <div className="flex justify-center ">
-              <img src="/ai.png" alt="Company Logo" className="w-[40rem] -ml-10 h-auto" />
+              <img src="/ai.png" alt="Company Logo" className="w-[48rem] md:w-[30rem] md:-ml-10 h-auto rounded-xl" />
             </div>
           </div>
         </div>
          
         {/* Newsletter Section */}
-        <div className="py-12 border-b border-gray-800">
-          <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl md:text-5xl md:mx-40 font-bold mb-4 text-white">
+        <div className="pb-12 border-b border-gray-800 bg-black">
+          <div className="text-center max-w-3xl mx-auto">
+            <h3 className="text-3xl md:text-5xl md:mx-40 font-bold mb-4 text-white">
               Stay Updated with{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                 AI Trends
               </span>
             </h3>
             <p className="text-sm md:text-2xl md:mx-10 text-gray-400 mb-6">
-              Get the latest insights, course updates, and industry trends delivered to your inbox.
+              Get the latest course updates to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
@@ -77,6 +106,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+        </div>
 
         {/* Responsive grid/footer main */}
         <div
@@ -87,6 +117,7 @@ const Footer = () => {
             md:grid-cols-2
             lg:grid-cols-6
             grid-cols-1
+            bg-black
           ">       
           {/* Brand & contact: mobile - flex row; md+ - block */}
           <div className="lg:col-span-2 flex flex-col md:flex-row md:space-x-6 lg:flex-col lg:space-x-0">
@@ -184,7 +215,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="py-6 border-t border-gray-800 flex flex-col md:flex-row items-center justify-between">
+        <div className="py-6 border-t border-gray-800 bg-black flex flex-col md:flex-row items-center justify-between">
           <div className="text-sm text-gray-400 mb-4 md:mb-0">
             ©2025 Unsquare Labs. All rights reserved.
           </div>

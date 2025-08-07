@@ -166,7 +166,7 @@ const ProfessionalCourseSection: React.FC = () => {
     <section ref={sectionRef} className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between md:mb-12">
           <div className="mb-6 md:mb-0">
             <div className="flex items-center mb-2">
               <BookOpen className="w-6 h-6 text-blue-600 mr-2" />
@@ -179,7 +179,7 @@ const ProfessionalCourseSection: React.FC = () => {
               Master AI tech with expert-led, trusted courses.
             </p>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="hidden md:flex items-center space-x-3">
             <button
               onClick={slidePrev}
               disabled={atStart}
@@ -261,7 +261,7 @@ const ProfessionalCourseSection: React.FC = () => {
                     <img
                       src={course.thumbnail.url}
                       alt={course.title}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-48 object-cover transition-transform duration-300"
                     />
                     <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
                       <PlayCircle className="w-3 h-3 mr-1" />

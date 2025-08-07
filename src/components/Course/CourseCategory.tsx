@@ -144,21 +144,18 @@ const ProfessionalCourseSection = () => {
   };
 
   return (
-    <section className="bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+    <section className="bg-gray-50 pt-32 py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-16">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
             <div className="flex items-center mb-2">
               <BookOpen className="w-6 h-6 text-blue-600 mr-2" />
               <span className="text-blue-600 font-semibold text-sm uppercase tracking-wide">Professional Courses</span>
             </div>
-            <h2 className="text-4xl font-bold text-gray-900 mb-2">
-              Learn In-Demand Skills
+            <h2 className="text-4xl font-bold text-gray-900">
+              What to learn next
             </h2>
-            <p className="text-lg text-gray-600">
-              Master cutting-edge technologies with expert-led courses trusted by professionals worldwide
-            </p>
           </div>
         </div>
 
@@ -214,7 +211,7 @@ const ProfessionalCourseSection = () => {
                           <img
                             src={course.thumbnail.url}
                             alt={course.title}
-                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-48 object-cover  transition-transform duration-300"
                           />
                           <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs flex items-center">
                             {course.duration ? `${course.duration} min` : 'N/A'}

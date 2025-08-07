@@ -79,8 +79,7 @@ const ContactPage = () => {
   return (
     <div>
       <Hero  />
-      <About />
-      <FAQSection />
+      {/* <About /> */}
       <ContactForm 
         formData={formData}
         errors={errors}
@@ -89,7 +88,8 @@ const ContactPage = () => {
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />      
-      <CTA />     
+      <FAQSection />
+      {/* <CTA />      */}
     </div>
   );
 };

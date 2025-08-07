@@ -40,7 +40,7 @@ const MentorAccessSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="bg-white text-black relative overflow-hidden"
+      className="bg-blue-500/10 text-black relative overflow-hidden"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         {/* Left Text with Staggered Animations */}
@@ -111,10 +111,7 @@ const MentorAccessSection = () => {
                 alt="MacBook"
                 className="w-full h-auto z-10 relative transform transition-all duration-500"
               />
-
-              {/* Glowing Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-lg blur-xl transition-all duration-1000 `} style={{ animationDelay: '1s' }}></div>
-            </div>
+    </div>
 
             {/* Screen content with Enhanced Animation */}
             <div className={`absolute top-[2%] left-[11%] w-[77%] h-[93%] overflow-hidden z-20 transition-all duration-1000`} style={{ transitionDelay: '800ms' }}>
@@ -128,26 +125,6 @@ const MentorAccessSection = () => {
               <div className={`absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent pointer-events-none transition-opacity duration-1000 ${
                 laptopInView ? 'animate-screen-shine' : 'opacity-0'
               }`}></div>
-
-              {/* Floating Notification Badges */}
-              {laptopInView && [
-                { top: '10%', right: '10%', delay: '1.2s', text: '5 New Mentors' },
-                { bottom: '15%', left: '10%', delay: '1.8s', text: 'Live Session' }
-              ].map((badge, index) => (
-                <div
-                  key={index}
-                  className={`absolute bg-gradient-to-r from-green-400 to-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg transition-all duration-800 ${
-                    laptopInView ? 'animate-badge-float' : 'opacity-0 scale-0'
-                  }`}
-                  style={{ 
-                    [badge.top ? 'top' : 'bottom']: badge.top || badge.bottom,
-                    [badge.right ? 'right' : 'left']: badge.right || badge.left,
-                    animationDelay: badge.delay 
-                  }}
-                >
-                  {badge.text}
-                </div>
-              ))}
             </div>
           </div>
         </div>

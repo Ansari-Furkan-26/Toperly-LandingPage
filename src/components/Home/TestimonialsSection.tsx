@@ -45,7 +45,7 @@ const TestimonialsSection = () => {
       name: "Sarah Chen",
       role: "Senior Data Scientist at Google",
       company: "Google",
-      content: "Toperly's AI-powered learning completely revolutionized how I approach machine learning. The adaptive curriculum and real-time feedback accelerated my skills beyond what I thought possible.",
+      content: "Toperly's AI-powered learning completely revolutionized. The adaptive curriculum and real-time feedback accelerated my skills beyond what I thought possible.",
       rating: 5,
       initials: "SC",
       achievement: "200% salary increase"
@@ -54,7 +54,7 @@ const TestimonialsSection = () => {
       name: "Lisa Wang",
       role: "Chief Technology Officer",
       company: "Fortune 500",
-      content: "As a CTO, I needed to understand AI's transformative potential. Toperly's executive course gave me the strategic framework to lead our company's AI transformation successfully.",
+      content: "I needed to understand AI's transformative potential. Toperly's executive course gave me the strategic framework to lead our company's AI transformation successfully.",
       rating: 5,
       initials: "LW",
       achievement: "Led digital transformation"
@@ -74,7 +74,7 @@ const TestimonialsSection = () => {
     <section 
       ref={sectionRef}
       id="reviews" 
-      className="pt-14 bg-gradient-secondary relative overflow-hidden"
+      className="py-14 bg-blue-500/10 relative overflow-hidden"
     >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -150,9 +150,7 @@ const TestimonialsSection = () => {
                   }`}
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
-                  <Card className={`group hover:shadow-elevated transition-all duration-700 border-0 bg-card/90 backdrop-blur-sm h-full overflow-hidden hover:scale-105 hover:-translate-y-2 ${
-                    cardsInView ? 'animate-card-float' : ''
-                  }`} style={{ animationDelay: `${800 + index * 200}ms` }}>
+                  <Card className={`group hover:shadow-elevated transition-all duration-700 border-0 bg-card/90 backdrop-blur-sm h-full overflow-hidden hover:scale-105 hover:-translate-y-2`} style={{ animationDelay: `${800 + index * 200}ms` }}>
                     <CardContent className="p-6 relative h-full">
                       
                       {/* Animated Quote Icon */}
@@ -220,9 +218,9 @@ const TestimonialsSection = () => {
             {testimonials.map((testimonial, index) => (
               <Card 
                 key={testimonial.name}
-                className={`group hover:shadow-elevated transition-all duration-700 border-0 bg-card/90 backdrop-blur-sm overflow-hidden hover:scale-105 hover:-translate-y-2 ${
+                className={`group hover:shadow-elevated border border-gray-200 transition-all duration-700 bg-card/90 backdrop-blur-sm overflow-hidden hover:-translate-y-2 ${
                   cardsInView 
-                    ? 'opacity-100 transform translate-y-0 scale-100 animate-card-float' 
+                    ? 'opacity-100 transform translate-y-0 scale-100 ' 
                     : 'opacity-0 transform translate-y-8 scale-95'
                 }`}
                 style={{ 

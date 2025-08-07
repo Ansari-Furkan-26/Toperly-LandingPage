@@ -73,7 +73,7 @@ const AIChatInterface = () => {
   }, [cardInView, isTyping, showNewMessage]);
 
   return (
-    <div className="w-full min-h-full bg-gradient-to-b from-gray-900 via-gray-900 to-gray-50 px-4 sm:px-6 lg:px-8">
+    <div className="w-full min-h-full bg-gradient-to-b from-[#080D1A] via-gray-900 to-gray-50 px-4 sm:px-6 lg:px-8">
       <div className="min-h-full -mt-10 bg-gradient-to-br from-blue-400/50 via-blue-200/30 to-purple-400/30 relative rounded-t-2xl overflow-hidden">
         
         {/* Enhanced Background Glows with Animation */}
@@ -100,7 +100,7 @@ const AIChatInterface = () => {
         {/* Animated overlay */}
         <div 
           ref={headerRef}
-          className={`absolute inset-0 bg-white/80 backdrop-blur-md rounded-t-2xl border border-white/20 shadow-lg z-10 transition-all duration-1000 ${
+          className={`absolute inset-0 bg-gray-50 backdrop-blur-md rounded-t-2xl border border-white/20 -lg z-10 transition-all duration-1000 ${
             headerInView ? 'animate-fadeIn' : 'opacity-0'
           }`} 
         />

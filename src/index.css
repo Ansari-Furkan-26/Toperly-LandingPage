@@ -9,12 +9,12 @@ All colors MUST be HSL.
 /* tailwind.config.css or any imported CSS file */
 @layer utilities {
   .bg-gradient-mobile {
-    background: linear-gradient(to top, #000000 50%, #ffffff 50%);
+    background: linear-gradient(to top, #000000 50%, #EBF2FE 50%);
   }
 
   @media (min-width: 640px) {
     .bg-gradient-mobile {
-      background: linear-gradient(to bottom, #ffffff 50%, #ffffff 50%);
+      background: linear-gradient(to bottom, #EBF2FE 50%, #EBF2FE 50%);
     }
   }
 }
